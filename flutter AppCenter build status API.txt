@@ -1,0 +1,9 @@
+title getting what if task is running and what?
+
+webSite-->Appcenter:get all apps
+webSite<-Appcenter:return app in JSON format
+webSite -->Appcenter: get branchs for each app
+webSite<-Appcenter: return branchs in JSON format
+webSite -->Appcenter: get builds for each app
+webSite<-Appcenter: return builds in JSON format
+note over webSite,Appcenter: after cycle is done extract from the json: "status" and "result" for each *last* build
