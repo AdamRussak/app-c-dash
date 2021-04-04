@@ -88,6 +88,7 @@ class LatestRun extends StatelessWidget {
           child: Column(
             children: [
               AppTile(
+                index: 0,
                 appName: list.appName,
                 branchName: list.branchName,
                 buildNumber: list.buildNumber,

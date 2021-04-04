@@ -22,6 +22,7 @@ class TasksList extends StatelessWidget {
 
               return Center(
                 child: AppTile(
+                  index: index,
                   appName: task.appName,
                   branchName: task.branchName,
                   buildNumber: task.buildNumber,

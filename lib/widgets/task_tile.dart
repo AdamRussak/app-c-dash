@@ -14,9 +14,11 @@ class AppTile extends StatelessWidget {
   final String owner;
   final String appOs;
   final String platform;
+  final int index;
   AppTile(
       {this.appName,
       this.branchName,
+      this.index,
       this.buildNumber,
       this.buildResult,
       this.buildStatus,
@@ -102,114 +104,121 @@ class AppTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {
-        launch("https://google.com");
-        print(appName);
-      },
-      isThreeLine: true,
-      contentPadding: EdgeInsets.all(20.0),
-      title: Text(
-        appName,
-        style: KAppNameTextStyle,
-      ),
-      leading: osIconSelector(appOs),
-      subtitle: Table(
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: [
-          TableRow(children: [
-            Center(
-              child: AppTileSettings(
-                rowDeiscriiption: Text(
-                  "Build ID:",
-                  style: KHeaderStyle,
-                ),
-                tileInput: Text(
-                  buildNumber.toString(),
-                  style: KListTextStyle,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            Center(
-              child: AppTileSettings(
-                rowDeiscriiption: Text(
-                  "Date:",
-                  style: KHeaderStyle,
-                ),
-                tileInput: finishTime == "inProgress"
-                    ? statusIcon(finishTime)
-                    : Text(
-                        finishTime,
-                        style: KListTextStyle,
-                      ),
-              ),
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            Center(
-              child: AppTileSettings(
-                rowDeiscriiption: Text(
-                  "Status:",
-                  style: KHeaderStyle,
-                ),
-                tileInput: statusIcon(buildStatus),
-              ),
-            ),
-          ]),
-          TableRow(
-            children: [
+    return Container(
+      margin: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+          color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+          borderRadius: BorderRadius.all(Radius.circular(20.0))),
+      child: ListTile(
+        onTap: () {
+          launch(
+              "https://appcenter.ms/orgs/$owner/apps/$appName/build/Branches");
+          print(appName);
+        },
+        isThreeLine: true,
+        contentPadding: EdgeInsets.all(20.0),
+        title: Text(
+          appName,
+          style: KAppNameTextStyle,
+        ),
+        leading: osIconSelector(appOs),
+        subtitle: Table(
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            TableRow(children: [
               Center(
                 child: AppTileSettings(
                   rowDeiscriiption: Text(
-                    "Platform:",
+                    "Build ID:",
                     style: KHeaderStyle,
                   ),
                   tileInput: Text(
-                    platform,
+                    buildNumber.toString(),
                     style: KListTextStyle,
                   ),
                 ),
               ),
-              Center(
-                child: SizedBox(
-                  width: 10.0,
-                ),
+              SizedBox(
+                width: 10.0,
               ),
               Center(
                 child: AppTileSettings(
                   rowDeiscriiption: Text(
-                    "Branch:",
+                    "Date:",
                     style: KHeaderStyle,
                   ),
-                  tileInput: Text(
-                    branchName,
-                    style: KListTextStyle,
-                  ),
+                  tileInput: finishTime == "inProgress"
+                      ? statusIcon(finishTime)
+                      : Text(
+                          finishTime,
+                          style: KListTextStyle,
+                        ),
                 ),
               ),
-              Center(
-                child: SizedBox(
-                  width: 10.0,
-                ),
+              SizedBox(
+                width: 10.0,
               ),
               Center(
                 child: AppTileSettings(
                   rowDeiscriiption: Text(
-                    "Build Result:",
+                    "Status:",
                     style: KHeaderStyle,
                   ),
-                  tileInput: buildResult == null
-                      ? resultIcon(" ")
-                      : resultIcon(buildResult),
+                  tileInput: statusIcon(buildStatus),
                 ),
               ),
-            ],
-          ),
-        ],
+            ]),
+            TableRow(
+              children: [
+                Center(
+                  child: AppTileSettings(
+                    rowDeiscriiption: Text(
+                      "Platform:",
+                      style: KHeaderStyle,
+                    ),
+                    tileInput: Text(
+                      platform,
+                      style: KListTextStyle,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: SizedBox(
+                    width: 10.0,
+                  ),
+                ),
+                Center(
+                  child: AppTileSettings(
+                    rowDeiscriiption: Text(
+                      "Branch:",
+                      style: KHeaderStyle,
+                    ),
+                    tileInput: Text(
+                      branchName,
+                      style: KListTextStyle,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: SizedBox(
+                    width: 10.0,
+                  ),
+                ),
+                Center(
+                  child: AppTileSettings(
+                    rowDeiscriiption: Text(
+                      "Build Result:",
+                      style: KHeaderStyle,
+                    ),
+                    tileInput: buildResult == null
+                        ? resultIcon(" ")
+                        : resultIcon(buildResult),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
