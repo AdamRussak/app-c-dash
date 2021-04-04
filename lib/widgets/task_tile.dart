@@ -110,16 +110,26 @@ class AppTile extends StatelessWidget {
           color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
           borderRadius: BorderRadius.all(Radius.circular(20.0))),
       child: ListTile(
-        onTap: () {
-          launch(
-              "https://appcenter.ms/orgs/$owner/apps/$appName/build/Branches");
-          print(appName);
-        },
         isThreeLine: true,
         contentPadding: EdgeInsets.all(20.0),
-        title: Text(
-          appName,
-          style: KAppNameTextStyle,
+        title: Container(
+          alignment: Alignment.centerLeft,
+          child: FloatingActionButton.extended(
+            tooltip: "Go to $appName in AppCenter",
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            foregroundColor: Colors.black,
+            backgroundColor: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+            onPressed: () {
+              launch(
+                  "https://appcenter.ms/orgs/$owner/apps/$appName/build/Branches");
+              print(appName);
+            },
+            label: Text(
+              appName,
+              style: KAppNameTextStyle,
+            ),
+          ),
         ),
         leading: osIconSelector(appOs),
         subtitle: Table(

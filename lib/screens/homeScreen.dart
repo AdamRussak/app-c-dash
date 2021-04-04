@@ -225,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(20.0))),
                                         child: Text(
-                                          'Total Number of App\`s:',
+                                          'Total Number of Apps:',
                                           style: kTopicStyle,
                                         ),
                                       ),
@@ -235,30 +235,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 10.0,
                                   ),
                                   Flexible(
-                                    child: Row(children: [
-                                      Flexible(
-                                        child: LatestRun(),
-                                      ),
-                                      Flexible(
-                                        child: Container(
-                                          height: 125,
-                                          margin: EdgeInsets.all(5.0),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey[400],
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20.0))),
-                                          child: Center(
-                                            child: Text(
-                                              taskData.taskCount.toString(),
-                                              style: TextStyle(
-                                                  fontSize: 45.0,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                    child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Flexible(
+                                            child: LatestRun(),
                                           ),
-                                        ),
-                                      )
-                                    ]),
+                                          Flexible(
+                                            child: Container(
+                                              height: 162,
+                                              margin: EdgeInsets.all(2.5),
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey[400],
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              20.0))),
+                                              child: Center(
+                                                child: Text(
+                                                  taskData.taskCount.toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 45.0,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ]),
                                   ),
                                   SizedBox(
                                     height: 10.0,
@@ -272,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(20.0))),
                                     child: Text(
-                                      "App\`s Last Run",
+                                      "Apps Last Run",
                                       style: kTopicStyle,
                                     ),
                                   ),
@@ -281,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   SizedBox(
                                     child: Container(
-                                      height: 625,
+                                      height: 600,
                                       child: TasksList(),
                                     ),
                                   ),

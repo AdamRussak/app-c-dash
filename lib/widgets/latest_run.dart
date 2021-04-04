@@ -81,10 +81,6 @@ class LatestRun extends StatelessWidget {
             ? null
             : list.finishTime.indexOf(delimiter);
         return Container(
-          margin: EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-              color: Colors.grey[400],
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
           child: Column(
             children: [
               AppTile(
