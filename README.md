@@ -43,3 +43,6 @@ from the same directory as the docker-compose.yaml, run: <br>
     - app last build result (sucess, Fail, not configured, Running).
 - on the top left you will have the last overall app build that was run with the same info as the list.
 - on the top right you will have the overall number of apps that where found using your API key.
+
+#### API calls Layout
+![app-c-dash API Calls]https://github.com/AdamRussak/app-c-dash/raw/main/images/flutter%20AppCenter%20build%20status%20API.png
