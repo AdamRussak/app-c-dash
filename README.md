@@ -1,5 +1,5 @@
 # app-c-dash
-**app-c-dash** is a single page Flutter web app to monitore and pro-activly manage the build process using the [AppCenter platfor](https://appcenter.ms/)
+**app-c-dash** is a single page Flutter web app to monitor and pro-activly manage the build process using the [AppCenter platform](https://appcenter.ms/)
 
 ### Run using dhttpd
 one of the simplest ways to run a flutter web app is to use the [dhttpd package](https://pub.dev/packages/dhttpd)
