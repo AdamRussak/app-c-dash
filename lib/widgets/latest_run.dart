@@ -77,7 +77,9 @@ class LatestRun extends StatelessWidget {
       builder: (context, taskData, child) {
         var list = taskData.latestList[0];
         String delimiter = "T";
-        int lastIndex = list.finishTime.indexOf(delimiter);
+        int lastIndex = list.finishTime == "inProgress"
+            ? null
+            : list.finishTime.indexOf(delimiter);
         return Container(
           margin: EdgeInsets.all(5.0),
           decoration: BoxDecoration(
@@ -91,8 +93,11 @@ class LatestRun extends StatelessWidget {
                 buildNumber: list.buildNumber,
                 buildResult: list.buildResult,
                 buildStatus: list.buildStatus,
-                finishTime: list.finishTime.substring(0, lastIndex),
+                finishTime: list.finishTime == "inProgress"
+                    ? list.finishTime
+                    : list.finishTime.substring(0, lastIndex),
                 appOs: list.appOs,
+                owner: list.owner,
                 platform: list.platform,
               )
             ],

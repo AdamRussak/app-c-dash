@@ -234,30 +234,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                   SizedBox(
                                     height: 10.0,
                                   ),
-                                  Row(children: [
-                                    Flexible(
-                                      child: LatestRun(),
-                                    ),
-                                    Flexible(
-                                      child: Container(
-                                        height: 125,
-                                        margin: EdgeInsets.all(5.0),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey[400],
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20.0))),
-                                        child: Center(
-                                          child: Text(
-                                            taskData.taskCount.toString(),
-                                            style: TextStyle(
-                                                fontSize: 45.0,
-                                                fontWeight: FontWeight.bold),
+                                  Flexible(
+                                    child: Row(children: [
+                                      Flexible(
+                                        child: LatestRun(),
+                                      ),
+                                      Flexible(
+                                        child: Container(
+                                          height: 125,
+                                          margin: EdgeInsets.all(5.0),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[400],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20.0))),
+                                          child: Center(
+                                            child: Text(
+                                              taskData.taskCount.toString(),
+                                              style: TextStyle(
+                                                  fontSize: 45.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  ]),
+                                      )
+                                    ]),
+                                  ),
                                   SizedBox(
                                     height: 10.0,
                                   ),

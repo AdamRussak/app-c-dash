@@ -8,8 +8,7 @@ void main() {
   runApp(MyApp());
 }
 
-//TODO:clean repo and upload it again
-//TODO:set upload script for dockerhub
+//TODO:find way to filtter project with no repo attached
 //TODO: add direct link to apps from the web (pressing the name of the app)
 class MyApp extends StatelessWidget {
   @override

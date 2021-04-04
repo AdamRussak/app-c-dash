@@ -2,6 +2,7 @@ import 'package:app_center_monitoring/utilities/const.dart';
 import 'package:app_center_monitoring/widgets/app_tile_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppTile extends StatelessWidget {
   final String buildResult;
@@ -10,6 +11,7 @@ class AppTile extends StatelessWidget {
   final String buildStatus;
   final String finishTime;
   final String appName;
+  final String owner;
   final String appOs;
   final String platform;
   AppTile(
@@ -18,6 +20,7 @@ class AppTile extends StatelessWidget {
       this.buildNumber,
       this.buildResult,
       this.buildStatus,
+      this.owner,
       this.appOs,
       this.platform,
       this.finishTime});
@@ -100,6 +103,10 @@ class AppTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        launch("https://google.com");
+        print(appName);
+      },
       isThreeLine: true,
       contentPadding: EdgeInsets.all(20.0),
       title: Text(

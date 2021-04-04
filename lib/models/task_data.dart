@@ -47,6 +47,7 @@ class TaskData extends ChangeNotifier {
       String finishTime,
       String appOs,
       String platform,
+      String owner,
       String appName}) {
     _appList.add(
       AppList(
@@ -56,6 +57,7 @@ class TaskData extends ChangeNotifier {
           buildStatus: buildStatus,
           finishTime: finishTime,
           appName: appName,
+          owner: owner,
           platform: platform,
           appOs: appOs),
     );
@@ -91,10 +93,10 @@ class TaskData extends ChangeNotifier {
   }
 
   void appCenterParseBranches(String apiKey, dynamic app, String owner) async {
-    // if (!noBuild.contains(app.appName)) {
     var currentApp = app.appName;
     var currentOs = app.os;
     var currentPlatform = app.platform;
+    var owner = ownerName.ownerMap[0].ownerName;
     branchName = await AppCenter().getBranches(currentApp, apiKey, owner).then(
         (response) => Branchlist.fromJson(jsonDecode(response.toString())));
     add(
@@ -105,8 +107,8 @@ class TaskData extends ChangeNotifier {
         finishTime: branchName.appMap['finishTime'],
         appName: currentApp,
         platform: currentPlatform,
+        owner: owner,
         appOs: currentOs);
-    // }
     getLatest();
     sortList();
     taskCount;
@@ -132,6 +134,7 @@ class TaskData extends ChangeNotifier {
             finishTime: "1888-01-17T15:02:40.6543762Z",
             appName: "default",
             platform: "default",
+            owner: "default",
             appOs: "default"),
       );
       max = _latestList[0];
@@ -139,12 +142,29 @@ class TaskData extends ChangeNotifier {
       max = _latestList[0];
     }
     _appList.forEach((e) {
-      if (e.finishTime != "NotConfigured") {
-        DateTime eDate = DateTime.parse(e.finishTime).toUtc();
-        DateTime maxDate = DateTime.parse(max.finishTime).toUtc();
-        if (eDate.toUtc().isAfter(maxDate.toUtc()) == true &&
-                e.finishTime != "NotConfigured" ||
-            max.finishTime == "NotConfigured") {
+      if (max.finishTime != "inProgress") {
+        if (e.finishTime != "NotConfigured" && e.finishTime != "inProgress") {
+          DateTime eDate = DateTime.parse(e.finishTime).toUtc();
+          DateTime maxDate = DateTime.parse(max.finishTime).toUtc();
+          if (eDate.toUtc().isAfter(maxDate.toUtc()) == true &&
+                  e.finishTime != "NotConfigured" ||
+              max.finishTime == "NotConfigured") {
+            max = e;
+            _latestList.isEmpty ? null : _latestList.clear();
+            _latestList.add(
+              AppList(
+                  buildResult: max.buildResult,
+                  branchName: max.branchName,
+                  buildNumber: max.buildNumber,
+                  buildStatus: max.buildStatus,
+                  finishTime: max.finishTime,
+                  appName: max.appName,
+                  platform: max.platform,
+                  owner: max.owner,
+                  appOs: max.appOs),
+            );
+          }
+        } else if (e.finishTime == "inProgress") {
           max = e;
           _latestList.isEmpty ? null : _latestList.clear();
           _latestList.add(
@@ -156,6 +176,7 @@ class TaskData extends ChangeNotifier {
                 finishTime: max.finishTime,
                 appName: max.appName,
                 platform: max.platform,
+                owner: max.owner,
                 appOs: max.appOs),
           );
         }

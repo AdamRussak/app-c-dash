@@ -7,6 +7,7 @@ class AppList {
   final String appName;
   final String appOs;
   final String platform;
+  final String owner;
   AppList(
       {this.buildResult,
       this.branchName,
@@ -15,5 +16,6 @@ class AppList {
       this.finishTime,
       this.appName,
       this.platform,
+      this.owner,
       this.appOs});
 }

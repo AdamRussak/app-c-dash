@@ -15,7 +15,8 @@ class TasksList extends StatelessWidget {
               final task = taskData.appList[index];
 
               String delimiter = "T";
-              int lastIndex = task.finishTime == "NotConfigured"
+              int lastIndex = task.finishTime == "NotConfigured" ||
+                      task.finishTime == "inProgress"
                   ? null
                   : task.finishTime.indexOf(delimiter);
 
@@ -26,10 +27,12 @@ class TasksList extends StatelessWidget {
                   buildNumber: task.buildNumber,
                   buildResult: task.buildResult,
                   buildStatus: task.buildStatus,
-                  finishTime: task.finishTime == "NotConfigured"
+                  finishTime: task.finishTime == "NotConfigured" ||
+                          task.finishTime == "inProgress"
                       ? task.finishTime
                       : task.finishTime.substring(0, lastIndex),
                   appOs: task.appOs,
+                  owner: task.owner,
                   platform: task.platform,
                 ),
               );

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 const KappCenterUrl = "https://api.appcenter.ms";
-
+const KappCenterLink = "https://appcenter.ms/orgs/";
 //api version for app center
 const KapiVersion = "v0.1";
 const KListSizeBox = SizedBox(
