@@ -7,11 +7,15 @@ one of the simplest ways to run a flutter web app is to use the [dhttpd package]
 ### Run using docker
 from the project root folder run:
 ````bash
+#build your own Image
 $tag="unsoop/app-c-dash"
 docker build -t $tag .
 
+#run ready Image from DockerHub
 docker run --rm unsoop/app-c-Dash 
+
 OR
+
 docker run --rm -p <AnyLigalPortYouLike>:4040 unsoop/app-c-Dash 
 ````
 ### Run using Docker-Compose: `docker-compose.yaml`
