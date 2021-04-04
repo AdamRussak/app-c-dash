@@ -20,7 +20,11 @@ class TasksList extends StatelessWidget {
                   ? null
                   : task.finishTime.indexOf(delimiter);
 
-              return Center(
+              return Container(
+                margin: EdgeInsets.all(2.0),
+                decoration: BoxDecoration(
+                    color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
                 child: AppTile(
                   index: index,
                   appName: task.appName,

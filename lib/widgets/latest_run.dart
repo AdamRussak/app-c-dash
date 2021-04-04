@@ -73,6 +73,7 @@ class LatestRun extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var index = 0;
     return Consumer<TaskData>(
       builder: (context, taskData, child) {
         var list = taskData.latestList[0];
@@ -81,6 +82,11 @@ class LatestRun extends StatelessWidget {
             ? null
             : list.finishTime.indexOf(delimiter);
         return Container(
+          alignment: Alignment.bottomLeft,
+          margin: EdgeInsets.all(2.5),
+          decoration: BoxDecoration(
+              color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
           child: Column(
             children: [
               AppTile(

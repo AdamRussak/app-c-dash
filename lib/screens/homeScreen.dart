@@ -244,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           Flexible(
                                             child: Container(
-                                              height: 162,
+                                              height: 150,
                                               margin: EdgeInsets.all(2.5),
                                               alignment: Alignment.center,
                                               decoration: BoxDecoration(
