@@ -1,15 +1,10 @@
-# app_center_monitoring
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 # app-c-dash
+**app-c-dash** is a single page Flutter web app to monitore and pro-activly manage the build process using the [AppCenter platfor](https://appcenter.ms/)
+## Using the **app-c-dash**
+
+![app-c-dash view](https://github.com/AdamRussak/app-c-dash/raw/6afca188cf8ee2c5d328c16e77cf88a60ed6d0a7/images/main_screen.png)
+
+### Run using dhttpd
+one of the simp
+
+### Run using docker
