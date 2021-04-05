@@ -164,7 +164,8 @@ class TaskData extends ChangeNotifier {
                   appOs: max.appOs),
             );
           }
-        } else if (e.finishTime == "inProgress") {
+        } else if (e.finishTime == "inProgress" &&
+            max.finishTime != "inProgress") {
           max = e;
           _latestList.isEmpty ? null : _latestList.clear();
           _latestList.add(
@@ -215,6 +216,7 @@ class TaskData extends ChangeNotifier {
   void refreshTimer() {
     _timer = Timer.periodic(Duration(minutes: buttonSelect), (timer) {
       appCenterApps(apiToken, ownerName.ownerMap[0].ownerName);
+      _latestList.clear();
       lastRefresh();
     });
   }
