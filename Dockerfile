@@ -4,7 +4,6 @@ FROM python:3.9-alpine3.13
 RUN apk add --no-cache bash
 # Copy the app files to the container
 COPY ./build/web/ /usr/local/bin/app
-COPY server.sh /usr/local/bin/app
 
 # Set the working directory to the app files within the container
 WORKDIR /usr/local/bin/app
