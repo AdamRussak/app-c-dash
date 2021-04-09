@@ -21,3 +21,4 @@ const kTopicStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 24.0,
 );
+const KpaddingApp = EdgeInsets.all(10.0);

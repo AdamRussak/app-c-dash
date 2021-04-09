@@ -1,5 +1,6 @@
 import 'package:app_center_monitoring/models/task_data.dart';
-import 'package:app_center_monitoring/screens/homeScreen.dart';
+import 'package:app_center_monitoring/screens/build_screen.dart';
+import 'package:app_center_monitoring/screens/home_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(scaffoldBackgroundColor: Colors.grey[100]),
         initialRoute: HomeScreen.id,
         routes: {
+          BuildScreen.id: (context) => BuildScreen(),
           HomeScreen.id: (context) => HomeScreen(),
         },
       ),
