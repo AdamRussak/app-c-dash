@@ -14,6 +14,11 @@ class HomeScreen extends StatelessWidget {
           padding: KpaddingApp,
           child: Column(
             children: [
+              //TODO: create buttons for Testing
+              //TODO: create Page for Testing
+              //TODO: create buttons for Builds
+              //TODO: create buttons for Distrabute
+              //TODO: create Page for Distrabute
               TopBar(),
             ],
           ),

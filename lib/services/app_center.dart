@@ -30,4 +30,20 @@ class AppCenter {
     var weatherData = await networkhelper.getData(apiKey);
     return weatherData;
   }
+
+  Future<dynamic> getReleases(
+      String appName, String apiKey, String owner) async {
+    networkhelper = NetworkHelper(
+        '$KappCenterUrl/$KapiVersion/apps/$owner/$appName/releases?published_only=false',
+        apiKey);
+    var weatherData = await networkhelper.getData(apiKey);
+    return weatherData;
+  }
+
+  Future<dynamic> getTests(String appName, String apiKey, String owner) async {
+    networkhelper = NetworkHelper(
+        '$KappCenterUrl/$KapiVersion/apps/$owner/$appName/test_series', apiKey);
+    var weatherData = await networkhelper.getData(apiKey);
+    return weatherData;
+  }
 }
