@@ -19,3 +19,17 @@ class AppList {
       this.owner,
       this.appOs});
 }
+
+class ReleaseList {
+  final int releaseID;
+  final String uploadVersion;
+  final String appName;
+  final String appOs;
+  final String uploadDate;
+  ReleaseList(
+      {this.releaseID,
+      this.uploadVersion,
+      this.appName,
+      this.uploadDate,
+      this.appOs});
+}

@@ -7,9 +7,11 @@ class NetworkHelper {
   Future getData(String apiKey) async {
     http.Response response = await http.get(url,
         headers: {"X-API-Token": apiKey, 'content-type': 'application/json'});
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && response.body != "[]") {
       String data = response.body;
       return data;
+    } else if (response.statusCode == 200 && response.body == "[]") {
+      print('empty reponse');
     } else {
       print(response.statusCode);
     }

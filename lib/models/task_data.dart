@@ -11,6 +11,7 @@ class TaskData extends ChangeNotifier {
   String formattedDate;
   Timer _timer;
   dynamic appName;
+  dynamic releaseCheck;
   int buttonSelect = 5;
   List buttonOptions = [
     1,
@@ -22,6 +23,7 @@ class TaskData extends ChangeNotifier {
   dynamic appsStatusList;
   bool isDataB = false;
   List<AppList> _appList = [];
+  List<ReleaseList> _releaseList = [];
   List<AppList> _latestList = [];
   // dynamic noBuild = ["Animo-Mobile-UI-Test", "Animo-Mobile-IOS"];
   String apiToken;
@@ -78,6 +80,14 @@ class TaskData extends ChangeNotifier {
     appCenterBranches(apiToken, owner);
   }
 
+  void appCenterRelease(dynamic app, String apiKey, String owner) async {
+    _releaseList.clear();
+    releaseCheck = await AppCenter()
+        .getReleases(app.appName, apiKey, owner)
+        .then((response) =>
+            Releaselist.fromJson(jsonDecode(response.toString())));
+  }
+
   void updateRadioButton(int newTime) {
     buttonSelect = newTime;
     _timer.cancel();
@@ -118,6 +128,7 @@ class TaskData extends ChangeNotifier {
 
   void appCenterBranches(String apiKey, String owner) {
     for (var app in appName.appMap) {
+      appCenterRelease(app, apiKey, owner);
       appCenterParseBranches(apiKey, app, owner);
     }
   }

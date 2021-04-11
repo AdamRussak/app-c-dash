@@ -1,5 +1,9 @@
 import 'dart:io';
 
+import 'package:app_center_monitoring/models/app_list.dart';
+
+//TODO: create convert process for tests json call
+//TODO: create convert process for releases json call
 //create the convertion from json to map to get the app lists
 class AppMap {
   String owner;
@@ -31,34 +35,6 @@ class Applist {
       exit(100);
     }
   }
-}
-
-//create conversion form json to brnach info
-class AppStatusMap {
-  String branchName;
-  int buildNumber;
-  String buildStatus;
-  String BuildResult;
-  String finishTime;
-  bool isConfigured;
-
-  AppStatusMap(this.BuildResult, this.branchName, this.buildNumber,
-      this.buildStatus, this.finishTime, this.isConfigured) {
-    branchName = this.branchName;
-    buildNumber = this.buildNumber;
-    buildStatus = this.buildStatus;
-    BuildResult = this.BuildResult;
-    finishTime = this.finishTime;
-    isConfigured = this.isConfigured;
-  }
-
-  AppStatusMap.fromJson(Map json)
-      : branchName = json['branch']['name'],
-        buildNumber = json['lastBuild']['id'],
-        buildStatus = json['lastBuild']['status'],
-        BuildResult = json['lastBuild']['result'],
-        finishTime = json['lastBuild']['finishTime'],
-        isConfigured = json['configured'];
 }
 
 //create the list of apps
@@ -147,6 +123,43 @@ class Ownerlist {
       List<OwnerMap> _ownerList =
           appObjJson.map((json) => OwnerMap.fromJson(json)).toList();
       return Ownerlist(_ownerList);
+    } else {
+      exit(100);
+    }
+  }
+}
+
+//create the list of Releases
+class Releaselist {
+  Map releaseMap;
+  Releaselist([this.releaseMap]);
+  factory Releaselist.fromJson(dynamic json) {
+    if (json != null) {
+      var appObjJson = json as List;
+      dynamic max = appObjJson.first['uploaded_at'] == null
+          ? {
+              'lastBuild': {'id': 0},
+              'uploaded_at': "1999-04-08T09:32:24.744Z"
+            }
+          : appObjJson.first;
+      appObjJson.forEach((e) {
+        if (e['enabled'] == true) {
+          if (e.containsKey('uploaded_at')) {
+            DateTime eDate = DateTime.parse(e['uploaded_at']).toUtc();
+            DateTime maxDate = DateTime.parse(max['uploaded_at']).toUtc();
+            if (eDate.toUtc().isAfter(maxDate.toUtc()) == true) {
+              max = e;
+            }
+            ;
+          }
+        }
+      });
+      var _releaseList = {
+        'releaseID': max['id'],
+        'uploadVersion': max['short_version'],
+        'uploadDate': max['uploaded_at']
+      };
+      return Releaselist(_releaseList);
     } else {
       exit(100);
     }

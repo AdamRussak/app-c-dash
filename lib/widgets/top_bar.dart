@@ -97,9 +97,12 @@ class TopBar extends StatelessWidget {
                     'Last refresh: ',
                     style: KListTextStyle,
                   ),
-                  Text(taskData.formattedDate == null
-                      ? "Waiting..."
-                      : taskData.formattedDate)
+                  Text(
+                    taskData.formattedDate == null
+                        ? "Waiting..."
+                        : taskData.formattedDate,
+                    style: KListTextStyle,
+                  )
                 ])),
             Container(
               margin: EdgeInsets.all(5.0),
@@ -121,7 +124,10 @@ class TopBar extends StatelessWidget {
                           Container(
                             child: Column(
                               children: [
-                                Text(i.toString() + "m"),
+                                Text(
+                                  i.toString() + "m",
+                                  style: KListTextStyle,
+                                ),
                                 Radio(
                                     value: i,
                                     groupValue: taskData.buttonSelect,
