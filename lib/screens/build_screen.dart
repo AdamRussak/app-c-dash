@@ -89,7 +89,7 @@ class _BuildScreenState extends State<BuildScreen> {
                                                 Radius.circular(20.0))),
                                         child: Center(
                                           child: Text(
-                                            taskData.taskCount.toString(),
+                                            taskData.buildAppCount.toString(),
                                             style: TextStyle(
                                                 fontSize: 45.0,
                                                 fontWeight: FontWeight.bold),

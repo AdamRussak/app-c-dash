@@ -29,12 +29,20 @@ class TaskData extends ChangeNotifier {
   String apiToken;
   bool tokenSet;
 
-  int get taskCount {
+  int get buildAppCount {
     return _appList == null ? 0 : _appList.length;
+  }
+
+  int get releaseAppCount {
+    return _releaseList == null ? 0 : _releaseList.length;
   }
 
   UnmodifiableListView<AppList> get appList {
     return UnmodifiableListView(_appList);
+  }
+
+  UnmodifiableListView<ReleaseList> get releaseList {
+    return UnmodifiableListView(_releaseList);
   }
 
   UnmodifiableListView<AppList> get latestList {
@@ -73,6 +81,7 @@ class TaskData extends ChangeNotifier {
   }
 
   void appCenterApps(String apiKey, String owner) async {
+    _releaseList.clear();
     _appList.clear();
     appName = await AppCenter()
         .getApps(apiKey, owner)
@@ -81,11 +90,20 @@ class TaskData extends ChangeNotifier {
   }
 
   void appCenterRelease(dynamic app, String apiKey, String owner) async {
-    _releaseList.clear();
     releaseCheck = await AppCenter()
         .getReleases(app.appName, apiKey, owner)
         .then((response) =>
             Releaselist.fromJson(jsonDecode(response.toString())));
+    if (releaseCheck.releaseMap["releaseID"] != 0) {
+      _releaseList.add(
+        ReleaseList(
+            appName: app.appName,
+            appOs: app.os,
+            releaseID: releaseCheck.releaseMap["releaseID"],
+            uploadDate: releaseCheck.releaseMap["uploadDate"],
+            uploadVersion: releaseCheck.releaseMap["uploadVersion"]),
+      );
+    }
   }
 
   void updateRadioButton(int newTime) {
@@ -121,7 +139,7 @@ class TaskData extends ChangeNotifier {
         appOs: currentOs);
     getLatest();
     sortList();
-    taskCount;
+    buildAppCount;
     isData();
     notifyListeners();
   }
@@ -198,7 +216,7 @@ class TaskData extends ChangeNotifier {
   }
 
   void isData() {
-    if (_appList.length != taskCount) {
+    if (_appList.length != buildAppCount) {
       isDataB = false;
     } else {
       isDataB = true;

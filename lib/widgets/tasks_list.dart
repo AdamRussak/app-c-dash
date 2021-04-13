@@ -42,7 +42,7 @@ class TasksList extends StatelessWidget {
                 ),
               );
             },
-            itemCount: taskData != null ? taskData.taskCount : 0,
+            itemCount: taskData != null ? taskData.buildAppCount : 0,
           ),
         );
       },

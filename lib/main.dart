@@ -1,6 +1,7 @@
 import 'package:app_center_monitoring/models/task_data.dart';
 import 'package:app_center_monitoring/screens/build_screen.dart';
 import 'package:app_center_monitoring/screens/home_screen.dart';
+import 'package:app_center_monitoring/screens/release_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         routes: {
           BuildScreen.id: (context) => BuildScreen(),
           HomeScreen.id: (context) => HomeScreen(),
+          ReleaseScreen.id: (context) => ReleaseScreen(),
         },
       ),
     );

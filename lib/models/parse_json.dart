@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:app_center_monitoring/models/app_list.dart';
-
 //TODO: create convert process for tests json call
 //TODO: create convert process for releases json call
 //create the convertion from json to map to get the app lists
@@ -134,6 +132,7 @@ class Releaselist {
   Map releaseMap;
   Releaselist([this.releaseMap]);
   factory Releaselist.fromJson(dynamic json) {
+    var _releaseList;
     if (json != null) {
       var appObjJson = json as List;
       dynamic max = appObjJson.first['uploaded_at'] == null
@@ -154,14 +153,18 @@ class Releaselist {
           }
         }
       });
-      var _releaseList = {
+      _releaseList = {
         'releaseID': max['id'],
         'uploadVersion': max['short_version'],
         'uploadDate': max['uploaded_at']
       };
-      return Releaselist(_releaseList);
     } else {
-      exit(100);
+      _releaseList = {
+        'releaseID': 0,
+        'uploadVersion': "1.0.0",
+        'uploadDate': "1999-04-08T09:32:24.744Z"
+      };
     }
+    return Releaselist(_releaseList);
   }
 }
