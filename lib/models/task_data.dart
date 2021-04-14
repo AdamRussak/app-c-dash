@@ -143,6 +143,7 @@ class TaskData extends ChangeNotifier {
         owner: owner,
         appOs: currentOs);
     getLatest();
+    latesRelease();
     sortList();
     buildAppCount;
     isData();
@@ -171,36 +172,20 @@ class TaskData extends ChangeNotifier {
     } else {
       max = _releaseLatestList[0];
     }
-    _appList.forEach((e) {
-      if (max.finishTime != "inProgress") {
-        if (e.finishTime != "NotConfigured" && e.finishTime != "inProgress") {
-          DateTime eDate = DateTime.parse(e.finishTime).toUtc();
-          DateTime maxDate = DateTime.parse(max.finishTime).toUtc();
-          if (eDate.toUtc().isAfter(maxDate.toUtc()) == true &&
-                  e.finishTime != "NotConfigured" ||
-              max.finishTime == "NotConfigured") {
-            max = e;
-            _releaseLatestList.isEmpty ? null : _releaseLatestList.clear();
-            _releaseLatestList.add(
-              ReleaseList(
-                  uploadVersion: max.uploadVersion,
-                  releaseID: max.releaseID,
-                  uploadDate: max.uploadDate,
-                  appName: max.appName,
-                  appOs: max.appOs),
-            );
-          }
-        } else if (e.finishTime == "inProgress" &&
-            max.finishTime != "inProgress") {
-          max = e;
-          _releaseLatestList.isEmpty ? null : _releaseLatestList.clear();
-          _releaseLatestList.add(ReleaseList(
+    _releaseList.forEach((e) {
+      DateTime eDate = DateTime.parse(e.uploadDate).toUtc();
+      DateTime maxDate = DateTime.parse(max.uploadDate).toUtc();
+      if (eDate.toUtc().isAfter(maxDate.toUtc()) == true) {
+        max = e;
+        _releaseLatestList.isEmpty ? null : _releaseLatestList.clear();
+        _releaseLatestList.add(
+          ReleaseList(
               uploadVersion: max.uploadVersion,
               releaseID: max.releaseID,
               uploadDate: max.uploadDate,
               appName: max.appName,
-              appOs: max.appOs));
-        }
+              appOs: max.appOs),
+        );
       }
     });
     notifyListeners();
