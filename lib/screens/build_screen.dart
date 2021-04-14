@@ -76,7 +76,7 @@ class _BuildScreenState extends State<BuildScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Flexible(
-                                      child: LatestRun(),
+                                      child: LatestRun('build'),
                                     ),
                                     Flexible(
                                       child: Container(
@@ -121,7 +121,9 @@ class _BuildScreenState extends State<BuildScreen> {
                             SizedBox(
                               child: Container(
                                 height: 600,
-                                child: TasksList(),
+                                child: TasksList(
+                                  screen: "build",
+                                ),
                               ),
                             ),
                           ]),

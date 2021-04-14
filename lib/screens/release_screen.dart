@@ -76,7 +76,7 @@ class _ReleaseScreenState extends State<ReleaseScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Flexible(
-                                      child: LatestRun(),
+                                      child: LatestRun('release'),
                                     ),
                                     Flexible(
                                       child: Container(
@@ -121,7 +121,9 @@ class _ReleaseScreenState extends State<ReleaseScreen> {
                             SizedBox(
                               child: Container(
                                 height: 600,
-                                child: TasksList(),
+                                child: TasksList(
+                                  screen: "release",
+                                ),
                               ),
                             ),
                           ]),

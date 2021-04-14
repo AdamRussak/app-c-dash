@@ -24,6 +24,7 @@ class TaskData extends ChangeNotifier {
   bool isDataB = false;
   List<AppList> _appList = [];
   List<ReleaseList> _releaseList = [];
+  List<ReleaseList> _releaseLatestList = [];
   List<AppList> _latestList = [];
   // dynamic noBuild = ["Animo-Mobile-UI-Test", "Animo-Mobile-IOS"];
   String apiToken;
@@ -47,6 +48,10 @@ class TaskData extends ChangeNotifier {
 
   UnmodifiableListView<AppList> get latestList {
     return UnmodifiableListView(_latestList);
+  }
+
+  UnmodifiableListView<ReleaseList> get releaseLatestList {
+    return UnmodifiableListView(_releaseLatestList);
   }
 
   void add(
@@ -149,6 +154,56 @@ class TaskData extends ChangeNotifier {
       appCenterRelease(app, apiKey, owner);
       appCenterParseBranches(apiKey, app, owner);
     }
+  }
+
+  void latesRelease() {
+    dynamic max;
+    if (_releaseLatestList.isEmpty) {
+      _releaseLatestList.add(
+        ReleaseList(
+            uploadVersion: "default",
+            releaseID: 0,
+            uploadDate: "1888-01-17T15:02:40.6543762Z",
+            appName: "default",
+            appOs: "default"),
+      );
+      max = _releaseLatestList[0];
+    } else {
+      max = _releaseLatestList[0];
+    }
+    _appList.forEach((e) {
+      if (max.finishTime != "inProgress") {
+        if (e.finishTime != "NotConfigured" && e.finishTime != "inProgress") {
+          DateTime eDate = DateTime.parse(e.finishTime).toUtc();
+          DateTime maxDate = DateTime.parse(max.finishTime).toUtc();
+          if (eDate.toUtc().isAfter(maxDate.toUtc()) == true &&
+                  e.finishTime != "NotConfigured" ||
+              max.finishTime == "NotConfigured") {
+            max = e;
+            _releaseLatestList.isEmpty ? null : _releaseLatestList.clear();
+            _releaseLatestList.add(
+              ReleaseList(
+                  uploadVersion: max.uploadVersion,
+                  releaseID: max.releaseID,
+                  uploadDate: max.uploadDate,
+                  appName: max.appName,
+                  appOs: max.appOs),
+            );
+          }
+        } else if (e.finishTime == "inProgress" &&
+            max.finishTime != "inProgress") {
+          max = e;
+          _releaseLatestList.isEmpty ? null : _releaseLatestList.clear();
+          _releaseLatestList.add(ReleaseList(
+              uploadVersion: max.uploadVersion,
+              releaseID: max.releaseID,
+              uploadDate: max.uploadDate,
+              appName: max.appName,
+              appOs: max.appOs));
+        }
+      }
+    });
+    notifyListeners();
   }
 
   void getLatest() {

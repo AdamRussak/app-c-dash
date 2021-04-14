@@ -4,45 +4,110 @@ import 'task_tile.dart';
 import 'package:provider/provider.dart';
 
 class TasksList extends StatelessWidget {
+  const TasksList({@required this.screen});
+  final String screen;
   @override
   Widget build(BuildContext context) {
     return Consumer<TaskData>(
       builder: (context, taskData, child) {
+        var totalCount;
+        if (screen == "build") {
+          totalCount = taskData.buildAppCount;
+        } else if (screen == "release") {
+          totalCount = taskData.releaseAppCount;
+        } else {}
         return Container(
           child: ListView.builder(
             addAutomaticKeepAlives: false,
             itemBuilder: (context, index) {
-              final task = taskData.appList[index];
+              if (screen == "build") {
+                final task = taskData.appList[index];
 
-              String delimiter = "T";
-              int lastIndex = task.finishTime == "NotConfigured" ||
-                      task.finishTime == "inProgress"
-                  ? null
-                  : task.finishTime.indexOf(delimiter);
+                String delimiter = "T";
+                int lastIndex = task.finishTime == "NotConfigured" ||
+                        task.finishTime == "inProgress"
+                    ? null
+                    : task.finishTime.indexOf(delimiter);
 
-              return Container(
-                margin: EdgeInsets.all(2.0),
-                decoration: BoxDecoration(
-                    color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: AppTile(
-                  index: index,
-                  appName: task.appName,
-                  branchName: task.branchName,
-                  buildNumber: task.buildNumber,
-                  buildResult: task.buildResult,
-                  buildStatus: task.buildStatus,
-                  finishTime: task.finishTime == "NotConfigured" ||
-                          task.finishTime == "inProgress"
-                      ? task.finishTime
-                      : task.finishTime.substring(0, lastIndex),
-                  appOs: task.appOs,
-                  owner: task.owner,
-                  platform: task.platform,
-                ),
-              );
+                return Container(
+                  margin: EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                      color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: AppTile(
+                    screen: screen,
+                    index: index,
+                    appName: task.appName,
+                    branchName: task.branchName,
+                    buildNumber: task.buildNumber,
+                    buildResult: task.buildResult,
+                    buildStatus: task.buildStatus,
+                    finishTime: task.finishTime == "NotConfigured" ||
+                            task.finishTime == "inProgress"
+                        ? task.finishTime
+                        : task.finishTime.substring(0, lastIndex),
+                    appOs: task.appOs,
+                    owner: task.owner,
+                    platform: task.platform,
+                  ),
+                );
+              } else if (screen == "release") {
+                final task = taskData.releaseList[index];
+                String delimiter = "T";
+                int lastIndex = task.uploadDate.indexOf(delimiter);
+                return Container(
+                  margin: EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                      color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: AppTile(
+                    index: index,
+                    appName: task.appName,
+                    buildNumber: task.releaseID,
+                    platform:
+                        task.uploadVersion == "" ? "0.0.0" : task.uploadVersion,
+                    finishTime: task.uploadDate.substring(0, lastIndex),
+                    appOs: task.appOs,
+                    branchName: "",
+                    buildResult: "",
+                    buildStatus: "",
+                    owner: "",
+                    screen: screen,
+                  ),
+                );
+              } else {
+                final task = taskData.appList[index];
+
+                String delimiter = "T";
+                int lastIndex = task.finishTime == "NotConfigured" ||
+                        task.finishTime == "inProgress"
+                    ? null
+                    : task.finishTime.indexOf(delimiter);
+
+                return Container(
+                  margin: EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                      color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: AppTile(
+                    index: index,
+                    appName: task.appName,
+                    branchName: task.branchName,
+                    buildNumber: task.buildNumber,
+                    buildResult: task.buildResult,
+                    buildStatus: task.buildStatus,
+                    finishTime: task.finishTime == "NotConfigured" ||
+                            task.finishTime == "inProgress"
+                        ? task.finishTime
+                        : task.finishTime.substring(0, lastIndex),
+                    appOs: task.appOs,
+                    owner: task.owner,
+                    platform: task.platform,
+                  ),
+                );
+              }
             },
-            itemCount: taskData != null ? taskData.buildAppCount : 0,
+            itemCount: taskData != null ? totalCount : 0,
           ),
         );
       },

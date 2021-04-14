@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppTile extends StatelessWidget {
+  final String screen;
   final String buildResult;
   final String branchName;
   final int buildNumber;
@@ -16,7 +17,8 @@ class AppTile extends StatelessWidget {
   final String platform;
   final int index;
   AppTile(
-      {this.appName,
+      {this.screen,
+      this.appName,
       this.branchName,
       this.index,
       this.buildNumber,
@@ -102,32 +104,9 @@ class AppTile extends StatelessWidget {
     return imageSet;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      isThreeLine: true,
-      contentPadding: EdgeInsets.all(20.0),
-      title: Container(
-        alignment: Alignment.centerLeft,
-        child: FloatingActionButton.extended(
-          tooltip: "Go to $appName",
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
-          foregroundColor: Colors.black,
-          backgroundColor: index.isOdd ? Colors.grey[300] : Colors.grey[400],
-          onPressed: () {
-            launch(
-                "https://appcenter.ms/orgs/$owner/apps/$appName/build/Branches");
-            print(appName);
-          },
-          label: Text(
-            appName,
-            style: KAppNameTextStyle,
-          ),
-        ),
-      ),
-      leading: osIconSelector(appOs),
-      subtitle: Table(
+  Widget screenSelector(String screen) {
+    if (screen == "build") {
+      return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         children: [
           TableRow(children: [
@@ -223,7 +202,184 @@ class AppTile extends StatelessWidget {
             ],
           ),
         ],
+      );
+    } else if (screen == "release") {
+      return Table(
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          TableRow(children: [
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Release ID:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: Text(
+                  buildNumber.toString(),
+                  style: KListTextStyle,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Date:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: Text(
+                  finishTime,
+                  style: KListTextStyle,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Version:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: Text(
+                  platform,
+                  style: KListTextStyle,
+                ),
+              ),
+            ),
+          ]),
+        ],
+      );
+    } else {
+      return Table(
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          TableRow(children: [
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Build ID:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: Text(
+                  buildNumber.toString(),
+                  style: KListTextStyle,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Date:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: finishTime == "inProgress"
+                    ? statusIcon(finishTime)
+                    : Text(
+                        finishTime,
+                        style: KListTextStyle,
+                      ),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Status:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: statusIcon(buildStatus),
+              ),
+            ),
+          ]),
+          TableRow(
+            children: [
+              Center(
+                child: AppTileSettings(
+                  rowDeiscriiption: Text(
+                    "Platform:",
+                    style: KHeaderStyle,
+                  ),
+                  tileInput: Text(
+                    platform,
+                    style: KListTextStyle,
+                  ),
+                ),
+              ),
+              Center(
+                child: SizedBox(
+                  width: 10.0,
+                ),
+              ),
+              Center(
+                child: AppTileSettings(
+                  rowDeiscriiption: Text(
+                    "Branch:",
+                    style: KHeaderStyle,
+                  ),
+                  tileInput: Text(
+                    branchName,
+                    style: KListTextStyle,
+                  ),
+                ),
+              ),
+              Center(
+                child: SizedBox(
+                  width: 10.0,
+                ),
+              ),
+              Center(
+                child: AppTileSettings(
+                  rowDeiscriiption: Text(
+                    "Build Result:",
+                    style: KHeaderStyle,
+                  ),
+                  tileInput: buildResult == null
+                      ? resultIcon(" ")
+                      : resultIcon(buildResult),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      isThreeLine: true,
+      contentPadding: EdgeInsets.all(20.0),
+      title: Container(
+        alignment: Alignment.centerLeft,
+        child: FloatingActionButton.extended(
+          tooltip: "Go to $appName",
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          foregroundColor: Colors.black,
+          backgroundColor: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+          onPressed: () {
+            launch(
+                "https://appcenter.ms/orgs/$owner/apps/$appName/build/Branches");
+            print(appName);
+          },
+          label: Text(
+            appName,
+            style: KAppNameTextStyle,
+          ),
+        ),
       ),
+      leading: osIconSelector(appOs),
+      subtitle: screenSelector(screen),
     );
   }
 }
