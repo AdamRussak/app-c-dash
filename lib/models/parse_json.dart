@@ -168,3 +168,12 @@ class Releaselist {
     return Releaselist(_releaseList);
   }
 }
+
+  // platform: platform,
+  //   devices: 'stats'.'devices',
+  //   total tests: 'stats'.'total',
+  //   pass tests: 'stats'.'passed',
+  //   failed tests: 'stats'.'failed',
+  //   state: state,
+  //   status: status
+  //   appVersion: appVersion

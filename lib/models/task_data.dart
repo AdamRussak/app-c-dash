@@ -12,6 +12,7 @@ class TaskData extends ChangeNotifier {
   Timer _timer;
   dynamic appName;
   dynamic releaseCheck;
+  dynamic testCheck;
   int buttonSelect = 5;
   List buttonOptions = [
     1,
@@ -24,7 +25,10 @@ class TaskData extends ChangeNotifier {
   bool isDataB = false;
   List<AppList> _appList = [];
   List<ReleaseList> _releaseList = [];
+
   List<ReleaseList> _releaseLatestList = [];
+  List<TestList> _testList = [];
+  List<TestList> _testLatestList = [];
   List<AppList> _latestList = [];
   // dynamic noBuild = ["Animo-Mobile-UI-Test", "Animo-Mobile-IOS"];
   String apiToken;
@@ -99,6 +103,22 @@ class TaskData extends ChangeNotifier {
         .getReleases(app.appName, apiKey, owner)
         .then((response) =>
             Releaselist.fromJson(jsonDecode(response.toString())));
+    if (releaseCheck.releaseMap["releaseID"] != 0) {
+      _releaseList.add(
+        ReleaseList(
+            appName: app.appName,
+            appOs: app.os,
+            releaseID: releaseCheck.releaseMap["releaseID"],
+            uploadDate: releaseCheck.releaseMap["uploadDate"],
+            uploadVersion: releaseCheck.releaseMap["uploadVersion"]),
+      );
+    }
+  }
+
+//TODO: need to set the testing process
+  void appCenterTesting(dynamic app, String apiKey, String owner) async {
+    testCheck = await AppCenter().getTests(app.appName, apiKey, owner).then(
+        (response) => Releaselist.fromJson(jsonDecode(response.toString())));
     if (releaseCheck.releaseMap["releaseID"] != 0) {
       _releaseList.add(
         ReleaseList(
