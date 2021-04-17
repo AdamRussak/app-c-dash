@@ -107,6 +107,7 @@ class TaskData extends ChangeNotifier {
     _releaseList.clear();
     _appList.clear();
     _testList.clear();
+
     appName = await AppCenter()
         .getApps(apiKey, owner)
         .then((response) => Applist.fromJson(jsonDecode(response.toString())));
@@ -135,19 +136,21 @@ class TaskData extends ChangeNotifier {
     testCheck = await AppCenter()
         .getTests(app.appName, apiKey, owner)
         .then((response) => TestMap.fromJson(jsonDecode(response.toString())));
-    if (testCheck.testMap["testDate"] != "1999-04-08T09:32:24.744Z") {
-      _testList.add(
-        TestList(
-            appVersion: testCheck.testMap['appVersion'],
-            testDate: testCheck.testMap['testDate'],
-            appOs: testCheck.testMap['appOs'],
-            appName: app.appName,
-            totalTests: testCheck.testMap['totalTests'],
-            passTests: testCheck.testMap['passTests'],
-            failedTests: testCheck.testMap['failedTests'],
-            state: testCheck.testMap['state'],
-            runStatus: testCheck.testMap['runStatus']),
-      );
+    if (testCheck.testMap != null) {
+      if (testCheck.testMap["testDate"] != "1999-04-08T09:32:24.744Z") {
+        _testList.add(
+          TestList(
+              appVersion: testCheck.testMap['appVersion'],
+              testDate: testCheck.testMap['testDate'],
+              appOs: testCheck.testMap['appOs'],
+              appName: app.appName,
+              totalTests: testCheck.testMap['totalTests'],
+              passTests: testCheck.testMap['passTests'],
+              failedTests: testCheck.testMap['failedTests'],
+              state: testCheck.testMap['state'],
+              runStatus: testCheck.testMap['runStatus']),
+        );
+      }
     }
     notifyListeners();
   }
@@ -183,6 +186,7 @@ class TaskData extends ChangeNotifier {
         platform: currentPlatform,
         owner: owner,
         appOs: currentOs);
+
     getLatest();
     latesRelease();
     sortList();
@@ -336,6 +340,7 @@ class TaskData extends ChangeNotifier {
         }
       }
     });
+    latesTest();
     notifyListeners();
   }
 

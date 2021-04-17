@@ -86,6 +86,8 @@ class LatestRun extends StatelessWidget {
           list = taskData.latestList[0];
         } else if (screen == "release") {
           list = taskData.releaseLatestList[0];
+        } else if (screen == "test") {
+          list = taskData.testLatestList[0];
         } else {}
 //TODO: add test screen block
         if (screen == "build") {
@@ -140,6 +142,33 @@ class LatestRun extends StatelessWidget {
                   branchName: "",
                   buildResult: "",
                   buildStatus: "",
+                  owner: "",
+                  screen: screen,
+                )
+              ],
+            ),
+          );
+        } else if (screen == "test") {
+          String delimiter = "T";
+          int lastIndex = list.testDate.indexOf(delimiter);
+          return Container(
+            alignment: Alignment.bottomLeft,
+            margin: EdgeInsets.all(2.5),
+            decoration: BoxDecoration(
+                color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            child: Column(
+              children: [
+                AppTile(
+                  index: 0,
+                  appName: list.appName,
+                  buildNumber: list.totalTests,
+                  platform: list.appVersion == "" ? "0.0.0" : list.appVersion,
+                  finishTime: list.testDate.substring(0, lastIndex),
+                  appOs: list.appName,
+                  branchName: list.totalTests.toString(),
+                  buildResult: list.state,
+                  buildStatus: list.runStatus,
                   owner: "",
                   screen: screen,
                 )

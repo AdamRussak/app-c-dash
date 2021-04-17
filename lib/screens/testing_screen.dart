@@ -122,6 +122,7 @@ class _TestScreenState extends State<TestScreen> {
                               child: Container(
                                 height: 600,
                                 child: TasksList(
+                                  screenList: taskData.testAppList,
                                   totalCount: taskData.testAppCount,
                                   screen: 'test',
                                 ),
