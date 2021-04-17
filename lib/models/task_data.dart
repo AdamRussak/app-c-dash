@@ -7,10 +7,14 @@ import 'package:app_center_monitoring/services/app_center.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
-//TODO: find and fix count and resoult inconsistance
+//TODO: set api calls to be init only when pressing to view page.
+//TODO: set a isData var for each page.
+//TODO: set timer to start for each new page, and removed when changing the page or be dynamic when triggered.
 class TaskData extends ChangeNotifier {
   String formattedDate;
   Timer _timer;
+  var owner;
+  var apiKey;
   dynamic appName;
   dynamic releaseCheck;
   dynamic testCheck;
@@ -31,7 +35,6 @@ class TaskData extends ChangeNotifier {
   List<TestList> _testList = [];
   List<TestList> _testLatestList = [];
   List<AppList> _latestList = [];
-  // dynamic noBuild = ["Animo-Mobile-UI-Test", "Animo-Mobile-IOS"];
   String apiToken;
   bool tokenSet;
 
@@ -99,57 +102,60 @@ class TaskData extends ChangeNotifier {
   void appCenterOwner(String apiKey) async {
     ownerName = await AppCenter().getOwners(apiKey).then(
         (response) => Ownerlist.fromJson(jsonDecode(response.toString())));
-    var owner = ownerName.ownerMap[0].ownerName;
-    appCenterApps(apiKey, owner);
+    owner = ownerName.ownerMap[0].ownerName;
+    appCenterApps();
   }
 
-  void appCenterApps(String apiKey, String owner) async {
+  void appCenterApps() async {
     _releaseList.clear();
     _appList.clear();
     _testList.clear();
 
     appName = await AppCenter()
-        .getApps(apiKey, owner)
+        .getApps(apiToken, owner)
         .then((response) => Applist.fromJson(jsonDecode(response.toString())));
     appCenterBranches(apiToken, owner);
   }
 
-  void appCenterRelease(dynamic app, String apiKey, String owner) async {
-    releaseCheck = await AppCenter()
-        .getReleases(app.appName, apiKey, owner)
-        .then((response) =>
-            Releaselist.fromJson(jsonDecode(response.toString())));
-    if (releaseCheck.releaseMap["releaseID"] != 0) {
-      _releaseList.add(
-        ReleaseList(
-            appName: app.appName,
-            appOs: app.os,
-            releaseID: releaseCheck.releaseMap["releaseID"],
-            uploadDate: releaseCheck.releaseMap["uploadDate"],
-            uploadVersion: releaseCheck.releaseMap["uploadVersion"]),
-      );
+  void appCenterRelease() async {
+    for (var app in appName.appMap) {
+      releaseCheck = await AppCenter()
+          .getReleases(app.appName, apiToken, owner)
+          .then((response) =>
+              Releaselist.fromJson(jsonDecode(response.toString())));
+      if (releaseCheck.releaseMap["releaseID"] != 0) {
+        _releaseList.add(
+          ReleaseList(
+              appName: app.appName,
+              appOs: app.os,
+              releaseID: releaseCheck.releaseMap["releaseID"],
+              uploadDate: releaseCheck.releaseMap["uploadDate"],
+              uploadVersion: releaseCheck.releaseMap["uploadVersion"]),
+        );
+      }
     }
     notifyListeners();
   }
 
-  void appCenterTesting(dynamic app, String apiKey, String owner) async {
-    testCheck = await AppCenter()
-        .getTests(app.appName, apiKey, owner)
-        .then((response) => TestMap.fromJson(jsonDecode(response.toString())));
-    if (testCheck.testMap != null) {
-      if (testCheck.testMap["testDate"] != "1999-04-08T09:32:24.744Z") {
-        _testList.add(
-          TestList(
-              appVersion: testCheck.testMap['appVersion'],
-              testDate: testCheck.testMap['testDate'],
-              appOs: testCheck.testMap['appOs'],
-              appName: app.appName,
-              totalTests: testCheck.testMap['totalTests'],
-              passTests: testCheck.testMap['passTests'],
-              failedTests: testCheck.testMap['failedTests'],
-              state: testCheck.testMap['state'],
-              runStatus: testCheck.testMap['runStatus']),
-        );
+  void appCenterTesting() async {
+    for (var app in appName.appMap) {
+      testCheck = await AppCenter().getTests(app.appName, apiToken, owner).then(
+          (response) => TestMap.fromJson(jsonDecode(response.toString())));
+      if (testCheck.testMap != null) {
+        if (testCheck.testMap["testDate"] != "1999-04-08T09:32:24.744Z") {
+          _testList.add(
+            TestList(
+                appVersion: testCheck.testMap['appVersion'],
+                testDate: testCheck.testMap['testDate'],
+                appOs: testCheck.testMap['appOs'],
+                appName: app.appName,
+                totalTests: testCheck.testMap['totalTests'],
+                passTests: testCheck.testMap['passTests'],
+                failedTests: testCheck.testMap['failedTests'],
+                state: testCheck.testMap['state'],
+                runStatus: testCheck.testMap['runStatus']),
+          );
+        }
       }
     }
     notifyListeners();
@@ -188,7 +194,7 @@ class TaskData extends ChangeNotifier {
         appOs: currentOs);
 
     getLatest();
-    latesRelease();
+    // latesRelease();
     sortList();
     buildAppCount;
     isData();
@@ -197,8 +203,6 @@ class TaskData extends ChangeNotifier {
 
   void appCenterBranches(String apiKey, String owner) {
     for (var app in appName.appMap) {
-      appCenterRelease(app, apiKey, owner);
-      appCenterTesting(app, apiKey, owner);
       appCenterParseBranches(apiKey, app, owner);
     }
   }
@@ -373,7 +377,7 @@ class TaskData extends ChangeNotifier {
 
   void refreshTimer() {
     _timer = Timer.periodic(Duration(minutes: buttonSelect), (timer) {
-      appCenterApps(apiToken, ownerName.ownerMap[0].ownerName);
+      // appCenterApps(apiToken, owner);
       _latestList.clear();
       lastRefresh();
     });
