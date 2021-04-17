@@ -4,20 +4,13 @@ import 'task_tile.dart';
 import 'package:provider/provider.dart';
 
 class TasksList extends StatelessWidget {
-  const TasksList({@required this.screen});
+  const TasksList({@required this.screen, @required this.totalCount});
   final String screen;
+  final int totalCount;
   @override
   Widget build(BuildContext context) {
     return Consumer<TaskData>(
       builder: (context, taskData, child) {
-        var totalCount;
-        if (screen == "build") {
-          totalCount = taskData.buildAppCount;
-        } else if (screen == "release") {
-          totalCount = taskData.releaseAppCount;
-        } else if (screen == "test") {
-          totalCount = taskData.testAppCount;
-        }
         return Container(
           child: ListView.builder(
             addAutomaticKeepAlives: false,

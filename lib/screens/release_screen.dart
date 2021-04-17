@@ -122,6 +122,7 @@ class _ReleaseScreenState extends State<ReleaseScreen> {
                               child: Container(
                                 height: 600,
                                 child: TasksList(
+                                  totalCount: taskData.releaseAppCount,
                                   screen: "release",
                                 ),
                               ),

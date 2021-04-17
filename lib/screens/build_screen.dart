@@ -122,6 +122,7 @@ class _BuildScreenState extends State<BuildScreen> {
                               child: Container(
                                 height: 600,
                                 child: TasksList(
+                                  totalCount: taskData.buildAppCount,
                                   screen: "build",
                                 ),
                               ),

@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+//TODO: set latest for tests
 class LatestRun extends StatelessWidget {
-  const LatestRun(this.screen);
+  const LatestRun(
+    this.screen,
+  );
   final String screen;
   Image osIconSelector(String os) {
     var imageSet;

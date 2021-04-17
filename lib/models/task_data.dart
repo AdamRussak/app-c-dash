@@ -7,6 +7,7 @@ import 'package:app_center_monitoring/services/app_center.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
+//TODO: find and fix count and resoult inconsistance
 class TaskData extends ChangeNotifier {
   String formattedDate;
   Timer _timer;
@@ -66,6 +67,10 @@ class TaskData extends ChangeNotifier {
     return UnmodifiableListView(_releaseLatestList);
   }
 
+  UnmodifiableListView<TestList> get testLatestList {
+    return UnmodifiableListView(_testLatestList);
+  }
+
   void add(
       {String buildResult,
       String branchName,
@@ -88,6 +93,7 @@ class TaskData extends ChangeNotifier {
           platform: platform,
           appOs: appOs),
     );
+    notifyListeners();
   }
 
   void appCenterOwner(String apiKey) async {
@@ -100,6 +106,7 @@ class TaskData extends ChangeNotifier {
   void appCenterApps(String apiKey, String owner) async {
     _releaseList.clear();
     _appList.clear();
+    _testList.clear();
     appName = await AppCenter()
         .getApps(apiKey, owner)
         .then((response) => Applist.fromJson(jsonDecode(response.toString())));
@@ -121,9 +128,9 @@ class TaskData extends ChangeNotifier {
             uploadVersion: releaseCheck.releaseMap["uploadVersion"]),
       );
     }
+    notifyListeners();
   }
 
-//TODO: need to set the testing process
   void appCenterTesting(dynamic app, String apiKey, String owner) async {
     testCheck = await AppCenter()
         .getTests(app.appName, apiKey, owner)
@@ -142,6 +149,7 @@ class TaskData extends ChangeNotifier {
             runStatus: testCheck.testMap['runStatus']),
       );
     }
+    notifyListeners();
   }
 
   void updateRadioButton(int newTime) {
@@ -219,6 +227,48 @@ class TaskData extends ChangeNotifier {
               uploadDate: max.uploadDate,
               appName: max.appName,
               appOs: max.appOs),
+        );
+      }
+    });
+    notifyListeners();
+  }
+
+  void latesTest() {
+    dynamic max;
+    if (_testLatestList.isEmpty) {
+      _testLatestList.add(
+        TestList(
+            appVersion: "Android",
+            testDate: "1888-01-17T15:02:40.6543762Z",
+            appOs: "default",
+            appName: "default",
+            totalTests: 0,
+            passTests: 0,
+            failedTests: 0,
+            state: "default",
+            runStatus: "default"),
+      );
+      max = _testLatestList[0];
+    } else {
+      max = _testLatestList[0];
+    }
+    _testList.forEach((e) {
+      DateTime eDate = DateTime.parse(e.testDate).toUtc();
+      DateTime maxDate = DateTime.parse(max.testDate).toUtc();
+      if (eDate.toUtc().isAfter(maxDate.toUtc()) == true) {
+        max = e;
+        _testLatestList.isEmpty ? null : _testLatestList.clear();
+        _testLatestList.add(
+          TestList(
+              appVersion: max.appVersion,
+              testDate: max.testDate,
+              appOs: max.appOs,
+              appName: max.appName,
+              totalTests: max.totalTests,
+              passTests: max.passTests,
+              failedTests: max.failedTests,
+              state: max.state,
+              runStatus: max.runStatus),
         );
       }
     });
