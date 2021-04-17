@@ -169,11 +169,39 @@ class Releaselist {
   }
 }
 
-  // platform: platform,
-  //   devices: 'stats'.'devices',
-  //   total tests: 'stats'.'total',
-  //   pass tests: 'stats'.'passed',
-  //   failed tests: 'stats'.'failed',
-  //   state: state,
-  //   status: status
-  //   appVersion: appVersion
+//TODO: fix the TestList class
+// crete list for testing from json
+class TestMap {
+  Map testMap;
+  TestMap([this.testMap]);
+  factory TestMap.fromJson(dynamic json) {
+    var _testList;
+    if (json != null) {
+      var appObjJson = json as List;
+      dynamic max = appObjJson.first['date'] == null
+          ? {'testDate': "1999-04-08T09:32:24.744Z"}
+          : appObjJson.first;
+      appObjJson.forEach((e) {
+        if (e.containsKey('date')) {
+          DateTime eDate = DateTime.parse(e['date']).toUtc();
+          DateTime maxDate = DateTime.parse(max['date']).toUtc();
+          if (eDate.toUtc().isAfter(maxDate.toUtc()) == true) {
+            max = e;
+          }
+          ;
+        }
+      });
+      _testList = {
+        'appVersion': max['appVersion'],
+        'testDate': max['date'],
+        'appOs': max['platform'],
+        'totalTests': max['stats']['total'],
+        'passTests': max['stats']['passed'],
+        'failedTests': max['stats']['failed'],
+        'state': max['state'],
+        'runStatus': max['runStatus'],
+      };
+    }
+    return TestMap(_testList);
+  }
+}

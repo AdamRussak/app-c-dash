@@ -30,7 +30,7 @@ class AppTile extends StatelessWidget {
       this.finishTime});
   Icon statusIcon(String status) {
     var statusImage;
-    if ("completed" == status) {
+    if ("completed" == status || "finished" == status) {
       statusImage = Icon(
         FontAwesomeIcons.thumbsUp,
         color: Colors.green[300],
@@ -105,6 +105,7 @@ class AppTile extends StatelessWidget {
   }
 
   Widget screenSelector(String screen) {
+    //TODO: add test screen block
     if (screen == "build") {
       return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -212,6 +213,56 @@ class AppTile extends StatelessWidget {
               child: AppTileSettings(
                 rowDeiscriiption: Text(
                   "Release ID:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: Text(
+                  buildNumber.toString(),
+                  style: KListTextStyle,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Date:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: Text(
+                  finishTime,
+                  style: KListTextStyle,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Version:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: Text(
+                  platform,
+                  style: KListTextStyle,
+                ),
+              ),
+            ),
+          ]),
+        ],
+      );
+    } else if (screen == "test") {
+      return Table(
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          TableRow(children: [
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Total Tests:",
                   style: KHeaderStyle,
                 ),
                 tileInput: Text(

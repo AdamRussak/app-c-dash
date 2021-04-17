@@ -35,22 +35,24 @@ class ReleaseList {
 }
 
 class TestList {
-  final String platform;
-  final int devices;
+  final String appVersion;
   final int totalTests;
   final int passTests;
   final int failedTests;
   final String state;
-  final String status;
+  final String runStatus;
   final String appName;
+  final String testDate;
+  final String appOs;
 
   TestList(
-      {this.platform,
-      this.devices,
+      {this.appVersion,
+      this.testDate,
+      this.appOs,
       this.appName,
       this.totalTests,
       this.passTests,
       this.failedTests,
       this.state,
-      this.status});
+      this.runStatus});
 }

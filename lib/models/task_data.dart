@@ -42,12 +42,20 @@ class TaskData extends ChangeNotifier {
     return _releaseList == null ? 0 : _releaseList.length;
   }
 
+  int get testAppCount {
+    return _testList == null ? 0 : _testList.length;
+  }
+
   UnmodifiableListView<AppList> get appList {
     return UnmodifiableListView(_appList);
   }
 
   UnmodifiableListView<ReleaseList> get releaseList {
     return UnmodifiableListView(_releaseList);
+  }
+
+  UnmodifiableListView<TestList> get testAppList {
+    return UnmodifiableListView(_testList);
   }
 
   UnmodifiableListView<AppList> get latestList {
@@ -117,16 +125,21 @@ class TaskData extends ChangeNotifier {
 
 //TODO: need to set the testing process
   void appCenterTesting(dynamic app, String apiKey, String owner) async {
-    testCheck = await AppCenter().getTests(app.appName, apiKey, owner).then(
-        (response) => Releaselist.fromJson(jsonDecode(response.toString())));
-    if (releaseCheck.releaseMap["releaseID"] != 0) {
-      _releaseList.add(
-        ReleaseList(
+    testCheck = await AppCenter()
+        .getTests(app.appName, apiKey, owner)
+        .then((response) => TestMap.fromJson(jsonDecode(response.toString())));
+    if (testCheck.testMap["testDate"] != "1999-04-08T09:32:24.744Z") {
+      _testList.add(
+        TestList(
+            appVersion: testCheck.testMap['appVersion'],
+            testDate: testCheck.testMap['testDate'],
+            appOs: testCheck.testMap['appOs'],
             appName: app.appName,
-            appOs: app.os,
-            releaseID: releaseCheck.releaseMap["releaseID"],
-            uploadDate: releaseCheck.releaseMap["uploadDate"],
-            uploadVersion: releaseCheck.releaseMap["uploadVersion"]),
+            totalTests: testCheck.testMap['totalTests'],
+            passTests: testCheck.testMap['passTests'],
+            failedTests: testCheck.testMap['failedTests'],
+            state: testCheck.testMap['state'],
+            runStatus: testCheck.testMap['runStatus']),
       );
     }
   }
@@ -173,6 +186,7 @@ class TaskData extends ChangeNotifier {
   void appCenterBranches(String apiKey, String owner) {
     for (var app in appName.appMap) {
       appCenterRelease(app, apiKey, owner);
+      appCenterTesting(app, apiKey, owner);
       appCenterParseBranches(apiKey, app, owner);
     }
   }

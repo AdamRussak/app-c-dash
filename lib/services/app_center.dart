@@ -35,7 +35,7 @@ class AppCenter {
 
   Future<dynamic> getTests(String appName, String apiKey, String owner) async {
     networkhelper = NetworkHelper(
-        '$KappCenterUrl/$KapiVersion/apps/$owner/$appName/test_series', apiKey);
+        '$KappCenterUrl/$KapiVersion/apps/$owner/$appName/test_runs', apiKey);
     var weatherData = await networkhelper.getData(apiKey);
     return weatherData;
   }

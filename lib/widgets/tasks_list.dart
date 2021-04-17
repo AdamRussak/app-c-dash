@@ -15,7 +15,9 @@ class TasksList extends StatelessWidget {
           totalCount = taskData.buildAppCount;
         } else if (screen == "release") {
           totalCount = taskData.releaseAppCount;
-        } else {}
+        } else if (screen == "test") {
+          totalCount = taskData.testAppCount;
+        }
         return Container(
           child: ListView.builder(
             addAutomaticKeepAlives: false,
@@ -71,6 +73,29 @@ class TasksList extends StatelessWidget {
                     branchName: "",
                     buildResult: "",
                     buildStatus: "",
+                    owner: "",
+                    screen: screen,
+                  ),
+                );
+              } else if (screen == "test") {
+                final task = taskData.testAppList[index];
+                String delimiter = "T";
+                int lastIndex = task.testDate.indexOf(delimiter);
+                return Container(
+                  margin: EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                      color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: AppTile(
+                    index: index,
+                    appName: task.appName,
+                    buildNumber: task.totalTests,
+                    platform: task.appVersion == "" ? "0.0.0" : task.appVersion,
+                    finishTime: task.testDate.substring(0, lastIndex),
+                    appOs: task.appName,
+                    branchName: task.totalTests.toString(),
+                    buildResult: task.state,
+                    buildStatus: task.runStatus,
                     owner: "",
                     screen: screen,
                   ),

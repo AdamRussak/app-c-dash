@@ -84,7 +84,7 @@ class LatestRun extends StatelessWidget {
         } else if (screen == "release") {
           list = taskData.releaseLatestList[0];
         } else {}
-
+//TODO: add test screen block
         if (screen == "build") {
           String delimiter = "T";
           int lastIndex = list.finishTime == "inProgress"
