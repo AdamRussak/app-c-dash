@@ -10,29 +10,6 @@ class LatestRun extends StatelessWidget {
     this.screen,
   );
   final String screen;
-  Image osIconSelector(String os) {
-    var imageSet;
-    if ("iOS" == os) {
-      imageSet = Image.asset(
-        'assets/os/iOS.png',
-        height: 50,
-        width: 50,
-      );
-    } else if ("Android" == os) {
-      imageSet = Image.asset(
-        'assets/os/android.png',
-        height: 50,
-        width: 50,
-      );
-    } else if ("Windows" == os) {
-      imageSet = Image.asset(
-        'assets/os/windows.png',
-        height: 50,
-        width: 50,
-      );
-    }
-    return imageSet;
-  }
 
   Icon statusIcon(String status) {
     var statusImage;

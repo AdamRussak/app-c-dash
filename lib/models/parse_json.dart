@@ -1,7 +1,5 @@
 import 'dart:io';
 
-//TODO: create convert process for tests json call
-//TODO: create convert process for releases json call
 //create the convertion from json to map to get the app lists
 class AppMap {
   String owner;

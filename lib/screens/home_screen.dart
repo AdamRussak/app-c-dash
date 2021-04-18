@@ -24,6 +24,11 @@ class HomeScreen extends StatelessWidget {
                 tabs: [
                   Tab(
                       icon: Icon(
+                    FontAwesomeIcons.hammer,
+                    color: Colors.grey[600],
+                  )),
+                  Tab(
+                      icon: Icon(
                     FontAwesomeIcons.thermometerQuarter,
                     color: Colors.grey[600],
                   )),
@@ -32,20 +37,15 @@ class HomeScreen extends StatelessWidget {
                     Icons.delivery_dining,
                     color: Colors.grey[600],
                   )),
-                  Tab(
-                      icon: Icon(
-                    FontAwesomeIcons.hammer,
-                    color: Colors.grey[600],
-                  )),
                 ],
               ),
               title: TopBar(),
             ),
             body: TabBarView(
               children: [
+                BuildScreen(),
                 TestScreen(),
                 ReleaseScreen(),
-                BuildScreen(),
               ],
             ),
           ),

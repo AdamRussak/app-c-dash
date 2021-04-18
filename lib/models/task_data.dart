@@ -133,11 +133,14 @@ class TaskData extends ChangeNotifier {
               uploadVersion: releaseCheck.releaseMap["uploadVersion"]),
         );
       }
+      notifyListeners();
     }
-    notifyListeners();
+    sortList(_releaseList);
+    latesRelease();
   }
 
   void appCenterTesting() async {
+    _testList.clear();
     for (var app in appName.appMap) {
       testCheck = await AppCenter().getTests(app.appName, apiToken, owner).then(
           (response) => TestMap.fromJson(jsonDecode(response.toString())));
@@ -157,8 +160,10 @@ class TaskData extends ChangeNotifier {
           );
         }
       }
+      notifyListeners();
     }
-    notifyListeners();
+    latesTest();
+    sortList(_testList);
   }
 
   void updateRadioButton(int newTime) {
@@ -168,8 +173,8 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void sortList() {
-    _appList.sort((a, b) {
+  void sortList(List listName) {
+    listName.sort((a, b) {
       return a.appName.toLowerCase().compareTo(b.appName.toLowerCase());
     });
     notifyListeners();
@@ -194,8 +199,7 @@ class TaskData extends ChangeNotifier {
         appOs: currentOs);
 
     getLatest();
-    // latesRelease();
-    sortList();
+    sortList(_appList);
     buildAppCount;
     isData();
     notifyListeners();
@@ -344,7 +348,6 @@ class TaskData extends ChangeNotifier {
         }
       }
     });
-    latesTest();
     notifyListeners();
   }
 
