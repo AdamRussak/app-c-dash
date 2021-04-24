@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TaskData>(builder: (context, taskData, child) {
       return MaterialApp(
+        title: "App-c-Dash",
         color: Colors.grey[500],
         home: DefaultTabController(
           length: 3,
