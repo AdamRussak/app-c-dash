@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-//TODO: set latest for tests
 class LatestRun extends StatelessWidget {
   const LatestRun(
     this.screen,
@@ -66,14 +65,13 @@ class LatestRun extends StatelessWidget {
         } else if (screen == "test") {
           list = taskData.testLatestList[0];
         } else {}
-//TODO: add test screen block
         if (screen == "build") {
           String delimiter = "T";
           int lastIndex = list.finishTime == "inProgress"
               ? null
               : list.finishTime.indexOf(delimiter);
           return Container(
-            alignment: Alignment.bottomLeft,
+            // alignment: Alignment.topLeft,
             margin: EdgeInsets.all(2.5),
             decoration: BoxDecoration(
                 color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
@@ -128,30 +126,57 @@ class LatestRun extends StatelessWidget {
         } else if (screen == "test") {
           String delimiter = "T";
           int lastIndex = list.testDate.indexOf(delimiter);
-          return Container(
-            alignment: Alignment.bottomLeft,
-            margin: EdgeInsets.all(2.5),
-            decoration: BoxDecoration(
-                color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
-            child: Column(
-              children: [
-                AppTile(
-                  index: 0,
-                  appName: list.appName,
-                  buildNumber: list.totalTests,
-                  platform: list.appVersion == "" ? "0.0.0" : list.appVersion,
-                  finishTime: list.testDate.substring(0, lastIndex),
-                  appOs: list.appName,
-                  branchName: list.totalTests.toString(),
-                  buildResult: list.state,
-                  buildStatus: list.runStatus,
-                  owner: "",
-                  screen: screen,
-                )
-              ],
-            ),
-          );
+          if (list.appName != "default") {
+            return Container(
+              alignment: Alignment.bottomLeft,
+              margin: EdgeInsets.all(2.5),
+              decoration: BoxDecoration(
+                  color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              child: Column(
+                children: [
+                  AppTile(
+                    index: 0,
+                    appName: list.appName,
+                    buildNumber: list.totalTests,
+                    platform: list.appVersion == "" ? "0.0.0" : list.appVersion,
+                    finishTime: list.testDate.substring(0, lastIndex),
+                    appOs: list.appOs,
+                    branchName: list.failedTests.toString(),
+                    buildResult: list.state,
+                    buildStatus: list.runStatus,
+                    owner: list.passTests.toString(),
+                    screen: screen,
+                  )
+                ],
+              ),
+            );
+          } else {
+            return Container(
+              alignment: Alignment.bottomLeft,
+              margin: EdgeInsets.all(2.5),
+              decoration: BoxDecoration(
+                  color: index.isOdd ? Colors.grey[300] : Colors.grey[400],
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              child: Column(
+                children: [
+                  AppTile(
+                    index: 0,
+                    appName: "",
+                    buildNumber: 0,
+                    platform: "",
+                    finishTime: "",
+                    appOs: "",
+                    branchName: "",
+                    buildResult: "",
+                    buildStatus: "",
+                    owner: "",
+                    screen: screen,
+                  )
+                ],
+              ),
+            );
+          }
         } else {
           String delimiter = "T";
           int lastIndex = list.finishTime == "inProgress"

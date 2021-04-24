@@ -81,10 +81,13 @@ class _TestScreenState extends State<TestScreen>
                                           style: kTopicStyle,
                                         ),
                                       ),
+                                      SizedBox(
+                                        width: 400,
+                                      ),
                                       Container(
                                         alignment: Alignment.center,
                                         height: 25,
-                                        width: 500,
+                                        width: 400,
                                         decoration: BoxDecoration(
                                             color: Colors.grey[400],
                                             borderRadius: BorderRadius.all(
@@ -105,12 +108,14 @@ class _TestScreenState extends State<TestScreen>
                                             CrossAxisAlignment.start,
                                         children: [
                                           Flexible(
+                                            fit: FlexFit.loose,
                                             child: LatestRun('test'),
                                           ),
-                                          Flexible(
+                                          SizedBox(
+                                            width: 550,
                                             child: Container(
                                               height: 150,
-                                              margin: EdgeInsets.all(2.5),
+                                              margin: EdgeInsets.all(10),
                                               alignment: Alignment.center,
                                               decoration: BoxDecoration(
                                                   color: Colors.grey[400],

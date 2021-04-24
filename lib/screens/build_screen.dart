@@ -96,9 +96,9 @@ class _BuildScreenState extends State<BuildScreen>
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
+                                  // SizedBox(
+                                  //   height: 10.0,
+                                  // ),
                                   Flexible(
                                     child: Row(
                                         crossAxisAlignment:
@@ -149,7 +149,7 @@ class _BuildScreenState extends State<BuildScreen>
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 10.0,
+                                    height: 5.0,
                                   ),
                                   SizedBox(
                                     child: Container(

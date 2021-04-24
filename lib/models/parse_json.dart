@@ -167,8 +167,6 @@ class Releaselist {
   }
 }
 
-//TODO: fix the TestList class
-// crete list for testing from json
 class TestMap {
   Map testMap;
   TestMap([this.testMap]);

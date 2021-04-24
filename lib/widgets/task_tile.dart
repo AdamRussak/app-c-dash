@@ -56,7 +56,7 @@ class AppTile extends StatelessWidget {
 
   Icon resultIcon(String status) {
     var statusImage;
-    if ("succeeded" == status) {
+    if ("succeeded" == status || "finished" == status) {
       statusImage = Icon(
         FontAwesomeIcons.thumbsUp,
         color: Colors.green[300],
@@ -105,7 +105,6 @@ class AppTile extends StatelessWidget {
   }
 
   Widget screenSelector(String screen) {
-    //TODO: add test screen block
     if (screen == "build") {
       return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -300,6 +299,62 @@ class AppTile extends StatelessWidget {
                   style: KListTextStyle,
                 ),
               ),
+            ),
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "State:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: buildResult == null
+                    ? resultIcon(" ")
+                    : resultIcon(buildResult),
+              ),
+            ),
+          ]),
+          // Part2
+          TableRow(children: [
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Failed Tests:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: Text(
+                  branchName,
+                  style: KListTextStyle,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Passed Tests:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: Text(
+                  owner,
+                  style: KListTextStyle,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Center(
+              child: AppTileSettings(
+                rowDeiscriiption: Text(
+                  "Run Status:",
+                  style: KHeaderStyle,
+                ),
+                tileInput: statusIcon(buildStatus),
+              ),
+            ),
+            Center(
+              child: Text(""),
             ),
           ]),
         ],

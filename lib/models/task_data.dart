@@ -134,9 +134,9 @@ class TaskData extends ChangeNotifier {
         );
       }
       notifyListeners();
+      latesRelease();
     }
     sortList(_releaseList);
-    latesRelease();
   }
 
   void appCenterTesting() async {
@@ -160,9 +160,9 @@ class TaskData extends ChangeNotifier {
           );
         }
       }
+      latesTest();
       notifyListeners();
     }
-    latesTest();
     sortList(_testList);
   }
 
