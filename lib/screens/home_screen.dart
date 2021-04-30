@@ -2,6 +2,7 @@ import 'package:app_center_monitoring/models/task_data.dart';
 import 'package:app_center_monitoring/screens/build_screen.dart';
 import 'package:app_center_monitoring/screens/release_screen.dart';
 import 'package:app_center_monitoring/screens/testing_screen.dart';
+import 'package:app_center_monitoring/widgets/tab_header.dart';
 import 'package:app_center_monitoring/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,20 +25,32 @@ class HomeScreen extends StatelessWidget {
               bottom: TabBar(
                 tabs: [
                   Tab(
-                      icon: Icon(
-                    FontAwesomeIcons.hammer,
-                    color: Colors.grey[600],
-                  )),
+                    child: TabHeader(
+                      tabText: 'Builds',
+                      tabIcon: Icon(
+                        FontAwesomeIcons.hammer,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ),
                   Tab(
-                      icon: Icon(
-                    FontAwesomeIcons.thermometerQuarter,
-                    color: Colors.grey[600],
-                  )),
+                    child: TabHeader(
+                      tabText: 'Tests',
+                      tabIcon: Icon(
+                        FontAwesomeIcons.thermometerQuarter,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ),
                   Tab(
-                      icon: Icon(
-                    Icons.delivery_dining,
-                    color: Colors.grey[600],
-                  )),
+                    child: TabHeader(
+                      tabText: 'Release',
+                      tabIcon: Icon(
+                        Icons.delivery_dining,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ),
                 ],
               ),
               title: TopBar(),
