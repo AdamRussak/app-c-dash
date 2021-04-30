@@ -107,14 +107,15 @@ class TaskData extends ChangeNotifier {
   }
 
   void appCenterApps() async {
-    _releaseList.clear();
-    _appList.clear();
-    _testList.clear();
+    if (apiToken != null) {
+      _releaseList.clear();
+      _appList.clear();
+      _testList.clear();
 
-    appName = await AppCenter()
-        .getApps(apiToken, owner)
-        .then((response) => Applist.fromJson(jsonDecode(response.toString())));
-    appCenterBranches(apiToken, owner);
+      appName = await AppCenter().getApps(apiToken, owner).then(
+          (response) => Applist.fromJson(jsonDecode(response.toString())));
+      appCenterBranches(apiToken, owner);
+    }
   }
 
   void appCenterRelease() async {
