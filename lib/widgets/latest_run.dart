@@ -128,7 +128,7 @@ class LatestRun extends StatelessWidget {
           int lastIndex = list.testDate.indexOf(delimiter);
           if (list.appName != "default") {
             return Container(
-              alignment: Alignment.bottomLeft,
+              alignment: Alignment.topLeft,
               margin: EdgeInsets.all(2.5),
               decoration: BoxDecoration(
                   color: index.isOdd ? Colors.grey[300] : Colors.grey[400],

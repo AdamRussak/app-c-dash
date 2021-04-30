@@ -176,5 +176,6 @@ class _BuildScreenState extends State<BuildScreen>
   @override
   void afterFirstLayout(BuildContext context) {
     Provider.of<TaskData>(context, listen: false).appCenterApps();
+    Provider.of<TaskData>(context, listen: false).setPage('build');
   }
 }

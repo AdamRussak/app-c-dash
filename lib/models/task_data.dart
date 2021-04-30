@@ -7,9 +7,7 @@ import 'package:app_center_monitoring/services/app_center.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
-//TODO: set api calls to be init only when pressing to view page.
 //TODO: set a isData var for each page.
-//TODO: set timer to start for each new page, and removed when changing the page or be dynamic when triggered.
 class TaskData extends ChangeNotifier {
   String formattedDate;
   Timer _timer;
@@ -37,6 +35,7 @@ class TaskData extends ChangeNotifier {
   List<AppList> _latestList = [];
   String apiToken;
   bool tokenSet;
+  String pageOn;
 
   int get buildAppCount {
     return _appList == null ? 0 : _appList.length;
@@ -119,6 +118,7 @@ class TaskData extends ChangeNotifier {
   }
 
   void appCenterRelease() async {
+    _releaseList.clear();
     for (var app in appName.appMap) {
       releaseCheck = await AppCenter()
           .getReleases(app.appName, apiToken, owner)
@@ -379,10 +379,19 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setPage(String pageNow) {
+    pageOn = pageNow;
+  }
+
   void refreshTimer() {
     _timer = Timer.periodic(Duration(minutes: buttonSelect), (timer) {
-      // appCenterApps(apiToken, owner);
-      _latestList.clear();
+      if (pageOn == 'build') {
+        appCenterApps();
+      } else if (pageOn == 'release') {
+        appCenterRelease();
+      } else if (pageOn == 'testing') {
+        appCenterTesting();
+      }
       lastRefresh();
     });
   }

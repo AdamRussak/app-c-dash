@@ -179,5 +179,6 @@ class _ReleaseScreenState extends State<ReleaseScreen>
   @override
   void afterFirstLayout(BuildContext context) {
     Provider.of<TaskData>(context, listen: false).appCenterRelease();
+    Provider.of<TaskData>(context, listen: false).setPage('release');
   }
 }

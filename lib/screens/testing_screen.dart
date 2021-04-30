@@ -181,5 +181,6 @@ class _TestScreenState extends State<TestScreen>
   @override
   void afterFirstLayout(BuildContext context) {
     Provider.of<TaskData>(context, listen: false).appCenterTesting();
+    Provider.of<TaskData>(context, listen: false).setPage('testing');
   }
 }
