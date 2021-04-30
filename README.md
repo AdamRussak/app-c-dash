@@ -1,4 +1,11 @@
 # app-c-dash
+#### Release Notes
+*2.1.2
+- Main view Change:
+  - add multi-tap on main screen for each view
+  - added Testing and Release Views
+- web banner will show app name (app-c-dash)
+
 **app-c-dash** is a single page Flutter web app to monitor and pro-activly manage the build process using the [AppCenter platform](https://appcenter.ms/)
 
 ### Run using dhttpd
