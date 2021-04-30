@@ -41,7 +41,7 @@ from the same directory as the docker-compose.yaml, run: <br>
 - in the browser go to app-c-dash and enter youre API key on the top left.
 - to access appCenter for each of youre app, simply press the header of the app (app name) and you will be directed to the build page of that specific app.
 
-![app-c-dash view](https://github.com/AdamRussak/app-c-dash/blob/raw/main/images/v2_main_screen.png)
+![app-c-dash view](https://github.com/AdamRussak/app-c-dash/blob/49d4a74b9f42a69f239142f3c6cd10b3ccd6ba48/images/v2_main_screen.png)
 
 #### the UI layout:
  - each app give you:.
