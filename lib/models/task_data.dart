@@ -111,7 +111,7 @@ class TaskData extends ChangeNotifier {
       _appList.clear();
       _testList.clear();
 
-      appName = await AppCenter().getApps(apiToken, owner).then(
+      appName = await AppCenter().getApps(apiToken).then(
           (response) => Applist.fromJson(jsonDecode(response.toString())));
       appCenterBranches(apiToken, owner);
     }

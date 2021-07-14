@@ -9,7 +9,6 @@ class LatestRun extends StatelessWidget {
     this.screen,
   );
   final String screen;
-
   Icon statusIcon(String status) {
     var statusImage;
     if ("completed" == status) {

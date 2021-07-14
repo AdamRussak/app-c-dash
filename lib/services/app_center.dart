@@ -3,9 +3,8 @@ import 'package:app_center_monitoring/utilities/const.dart';
 
 class AppCenter {
   NetworkHelper networkhelper;
-  Future<dynamic> getApps(String apiKey, String owner) async {
-    networkhelper =
-        NetworkHelper('$KappCenterUrl/$KapiVersion/orgs/$owner/apps', apiKey);
+  Future<dynamic> getApps(String apiKey) async {
+    networkhelper = NetworkHelper('$KappCenterUrl/$KapiVersion/apps', apiKey);
     var weatherData = await networkhelper.getData(apiKey);
     return weatherData;
   }
