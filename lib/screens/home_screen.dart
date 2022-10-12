@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                     child: TabHeader(
                       tabText: 'Tests',
                       tabIcon: Icon(
-                        FontAwesomeIcons.thermometerQuarter,
+                        FontAwesomeIcons.thermometer,
                         color: Colors.grey[600],
                       ),
                     ),

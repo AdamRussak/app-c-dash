@@ -21,7 +21,7 @@ class _TestScreenState extends State<TestScreen>
     return Consumer<TaskData>(
       builder: (context, taskData, child) {
         return Scaffold(
-          body: taskData.latestList.isEmpty == true
+          body: taskData.latestList.isEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -45,29 +45,115 @@ class _TestScreenState extends State<TestScreen>
                                 color: Colors.grey[600], fontSize: 35.0)),
                   ],
                 )
-              : Padding(
-                  padding: KpaddingApp,
-                  child: Column(
-                    children: [
-                      Flexible(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20.0),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20.0),
-                                  topRight: Radius.circular(20.0))),
-                          child: Center(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+              : taskData.testAppCount == 0
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Image.network(
+                            'https://media.giphy.com/media/gw3IWyGkC0rsazTi/giphy.gif?raw=true',
+                            height: 500,
+                          ),
+                        )
+                      ],
+                    )
+                  : Padding(
+                      padding: KpaddingApp,
+                      child: Column(
+                        children: [
+                          Flexible(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(20.0))),
+                              child: Center(
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            alignment: Alignment.center,
+                                            height: 25,
+                                            width: 500,
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey[400],
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20.0))),
+                                            child: Text(
+                                              "Latest Test",
+                                              style: kTopicStyle,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 400,
+                                          ),
+                                          Container(
+                                            alignment: Alignment.center,
+                                            height: 25,
+                                            width: 400,
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey[400],
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20.0))),
+                                            child: Text(
+                                              'Total Number of Apps:',
+                                              style: kTopicStyle,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Flexible(
+                                        child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Flexible(
+                                                fit: FlexFit.loose,
+                                                child: LatestRun('test'),
+                                              ),
+                                              SizedBox(
+                                                width: 550,
+                                                child: Container(
+                                                  height: 150,
+                                                  margin: EdgeInsets.all(10),
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey[400],
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20.0))),
+                                                  child: Center(
+                                                    child: Text(
+                                                      taskData.testAppCount
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 45.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
                                       Container(
                                         alignment: Alignment.center,
                                         height: 25,
@@ -77,102 +163,30 @@ class _TestScreenState extends State<TestScreen>
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(20.0))),
                                         child: Text(
-                                          "Latest Test",
+                                          "Apps Last Test",
                                           style: kTopicStyle,
                                         ),
                                       ),
                                       SizedBox(
-                                        width: 400,
+                                        height: 10.0,
                                       ),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        height: 25,
-                                        width: 400,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey[400],
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20.0))),
-                                        child: Text(
-                                          'Total Number of Apps:',
-                                          style: kTopicStyle,
+                                      SizedBox(
+                                        child: Container(
+                                          height: 600,
+                                          child: TasksList(
+                                            screenList: taskData.testAppList,
+                                            totalCount: taskData.testAppCount,
+                                            screen: 'test',
+                                          ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Flexible(
-                                    child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Flexible(
-                                            fit: FlexFit.loose,
-                                            child: LatestRun('test'),
-                                          ),
-                                          SizedBox(
-                                            width: 550,
-                                            child: Container(
-                                              height: 150,
-                                              margin: EdgeInsets.all(10),
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.grey[400],
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              20.0))),
-                                              child: Center(
-                                                child: Text(
-                                                  taskData.testAppCount
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 45.0,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 25,
-                                    width: 500,
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[400],
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20.0))),
-                                    child: Text(
-                                      "Apps Last Test",
-                                      style: kTopicStyle,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  SizedBox(
-                                    child: Container(
-                                      height: 600,
-                                      child: TasksList(
-                                        screenList: taskData.testAppList,
-                                        totalCount: taskData.testAppCount,
-                                        screen: 'test',
-                                      ),
-                                    ),
-                                  ),
-                                ]),
+                                    ]),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
         );
       },
     );

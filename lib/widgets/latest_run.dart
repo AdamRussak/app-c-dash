@@ -18,12 +18,12 @@ class LatestRun extends StatelessWidget {
       );
     } else if ("inProgress" == status) {
       statusImage = Icon(
-        FontAwesomeIcons.running,
+        FontAwesomeIcons.personRunning,
         color: Colors.blue[100],
       );
     } else {
       statusImage = Icon(
-        FontAwesomeIcons.exclamationCircle,
+        FontAwesomeIcons.circleExclamation,
         color: Colors.red[200],
       );
     }
@@ -39,12 +39,12 @@ class LatestRun extends StatelessWidget {
       );
     } else if ("inProgress" == status) {
       statusImage = Icon(
-        FontAwesomeIcons.running,
+        FontAwesomeIcons.personRunning,
         color: Colors.blue[100],
       );
     } else {
       statusImage = Icon(
-        FontAwesomeIcons.exclamationCircle,
+        FontAwesomeIcons.circleExclamation,
         color: Colors.red[200],
       );
     }
@@ -66,9 +66,7 @@ class LatestRun extends StatelessWidget {
         } else {}
         if (screen == "build") {
           String delimiter = "T";
-          int lastIndex = list.finishTime == "inProgress"
-              ? null
-              : list.finishTime.indexOf(delimiter);
+          int lastIndex = list.finishTime == "inProgress" ? null : list.finishTime.indexOf(delimiter);
           return Container(
             // alignment: Alignment.topLeft,
             margin: EdgeInsets.all(2.5),
@@ -84,9 +82,8 @@ class LatestRun extends StatelessWidget {
                   buildNumber: list.buildNumber,
                   buildResult: list.buildResult,
                   buildStatus: list.buildStatus,
-                  finishTime: list.finishTime == "inProgress"
-                      ? list.finishTime
-                      : list.finishTime.substring(0, lastIndex),
+                  finishTime:
+                      list.finishTime == "inProgress" ? list.finishTime : list.finishTime.substring(0, lastIndex),
                   appOs: list.appOs,
                   owner: list.owner,
                   platform: list.platform,
@@ -111,8 +108,7 @@ class LatestRun extends StatelessWidget {
                   buildNumber: list.releaseID,
                   finishTime: list.uploadDate.substring(0, lastIndex),
                   appOs: list.appOs,
-                  platform:
-                      list.uploadVersion == "" ? "0.0.0" : list.uploadVersion,
+                  platform: list.uploadVersion == "" ? "0.0.0" : list.uploadVersion,
                   branchName: "",
                   buildResult: "",
                   buildStatus: "",
@@ -178,9 +174,7 @@ class LatestRun extends StatelessWidget {
           }
         } else {
           String delimiter = "T";
-          int lastIndex = list.finishTime == "inProgress"
-              ? null
-              : list.finishTime.indexOf(delimiter);
+          int lastIndex = list.finishTime == "inProgress" ? null : list.finishTime.indexOf(delimiter);
           return Container(
             alignment: Alignment.bottomLeft,
             margin: EdgeInsets.all(2.5),
@@ -196,9 +190,8 @@ class LatestRun extends StatelessWidget {
                   buildNumber: list.buildNumber,
                   buildResult: list.buildResult,
                   buildStatus: list.buildStatus,
-                  finishTime: list.finishTime == "inProgress"
-                      ? list.finishTime
-                      : list.finishTime.substring(0, lastIndex),
+                  finishTime:
+                      list.finishTime == "inProgress" ? list.finishTime : list.finishTime.substring(0, lastIndex),
                   appOs: list.appOs,
                   owner: list.owner,
                   platform: list.platform,

@@ -37,17 +37,17 @@ class AppTile extends StatelessWidget {
       );
     } else if ("inProgress" == status) {
       statusImage = Icon(
-        FontAwesomeIcons.running,
+        FontAwesomeIcons.personRunning,
         color: Colors.blue[100],
       );
     } else if ("NotConfigured" == status) {
       statusImage = Icon(
-        FontAwesomeIcons.exclamationCircle,
+        FontAwesomeIcons.circleExclamation,
         color: Colors.blueAccent[200],
       );
     } else {
       statusImage = Icon(
-        FontAwesomeIcons.exclamationTriangle,
+        FontAwesomeIcons.triangleExclamation,
         color: Colors.red[200],
       );
     }
@@ -63,17 +63,17 @@ class AppTile extends StatelessWidget {
       );
     } else if ("inProgress" == status) {
       statusImage = Icon(
-        FontAwesomeIcons.running,
+        FontAwesomeIcons.personRunning,
         color: Colors.blue[100],
       );
     } else if ("NotConfigured" == status) {
       statusImage = Icon(
-        FontAwesomeIcons.exclamationCircle,
+        FontAwesomeIcons.circleExclamation,
         color: Colors.blueAccent[200],
       );
     } else {
       statusImage = Icon(
-        FontAwesomeIcons.exclamationCircle,
+        FontAwesomeIcons.circleExclamation,
         color: Colors.red[200],
       );
     }
@@ -194,9 +194,7 @@ class AppTile extends StatelessWidget {
                     "Build Result:",
                     style: KHeaderStyle,
                   ),
-                  tileInput: buildResult == null
-                      ? resultIcon(" ")
-                      : resultIcon(buildResult),
+                  tileInput: buildResult == null ? resultIcon(" ") : resultIcon(buildResult),
                 ),
               ),
             ],
@@ -306,9 +304,7 @@ class AppTile extends StatelessWidget {
                   "State:",
                   style: KHeaderStyle,
                 ),
-                tileInput: buildResult == null
-                    ? resultIcon(" ")
-                    : resultIcon(buildResult),
+                tileInput: buildResult == null ? resultIcon(" ") : resultIcon(buildResult),
               ),
             ),
           ]),
@@ -448,9 +444,7 @@ class AppTile extends StatelessWidget {
                     "Build Result:",
                     style: KHeaderStyle,
                   ),
-                  tileInput: buildResult == null
-                      ? resultIcon(" ")
-                      : resultIcon(buildResult),
+                  tileInput: buildResult == null ? resultIcon(" ") : resultIcon(buildResult),
                 ),
               ),
             ],
@@ -469,13 +463,11 @@ class AppTile extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: FloatingActionButton.extended(
           tooltip: "Go to $appName",
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
           foregroundColor: Colors.black,
           backgroundColor: index.isOdd ? Colors.grey[300] : Colors.grey[400],
           onPressed: () {
-            launch(
-                "https://appcenter.ms/orgs/$owner/apps/$appName/build/Branches");
+            launchUrl(Uri.parse("https://appcenter.ms/orgs/$owner/apps/$appName/build/Branches"));
             print(appName);
           },
           label: Text(

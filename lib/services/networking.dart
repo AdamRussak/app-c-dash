@@ -5,8 +5,8 @@ class NetworkHelper {
   final String url;
   final String apiKey;
   Future getData(String apiKey) async {
-    http.Response response = await http.get(url,
-        headers: {"X-API-Token": apiKey, 'content-type': 'application/json'});
+    http.Response response =
+        await http.get(Uri.parse(url), headers: {"X-API-Token": apiKey, 'content-type': 'application/json'});
     if (response.statusCode == 200 && response.body != "[]") {
       String data = response.body;
       return data;
